@@ -7,16 +7,19 @@
   <style>
     :root {
       color-scheme: light;
-      --bg:       #f5f5f7;
-      --surface:  #ffffff;
-      --border:   #e2e2e7;
-      --accent:   #007aff;
-      --accent2:  #34c759;
-      --warn:     #ff9500;
-      --danger:   #ff3b30;
-      --text:     #1c1c1e;
-      --muted:    #8e8e93;
-      --radius:   14px;
+      --bg:            #f5f5f7;
+      --surface:       #ffffff;
+      --border:        #e2e2e7;
+      --accent:        #007aff;
+      --accent-light:  #e8f2ff;
+      --danger:        #ff3b30;
+      --danger-light:  #fff0ef;
+      --warn:          #ff9500;
+      --text:          #1c1c1e;
+      --text-muted:    #8e8e93;
+      --trigger-bg:    #f0f7ff;
+      --trigger-color: #0055cc;
+      --radius:        12px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,96 +38,50 @@
       padding: 60px 24px 50px;
       text-align: center;
     }
-    .hero-logo {
-      font-size: 42px;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 12px;
-    }
+    .hero-logo { font-size: 42px; font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
     .hero-logo span { color: #64b5f6; }
-    .hero-sub {
-      font-size: 18px;
-      opacity: 0.75;
-      max-width: 520px;
-      margin: 0 auto 28px;
-      line-height: 1.5;
-    }
+    .hero-sub { font-size: 18px; opacity: 0.75; max-width: 520px; margin: 0 auto 28px; line-height: 1.5; }
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 8px 18px;
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 500;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 500;
     }
 
     /* ── Layout ─────────────────────────────────────────────────────── */
-    .container {
-      max-width: 740px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
-    }
+    .container { max-width: 740px; margin: 0 auto; padding: 48px 24px 80px; }
 
     /* ── Section header ──────────────────────────────────────────────── */
     .section-title {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--muted);
-      margin-bottom: 20px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--text-muted);
+      margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
     }
 
     /* ── Steps ───────────────────────────────────────────────────────── */
     .steps { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
 
-    .step {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .step.done   { border-color: #34c759; }
+    .step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .step.warn   { border-color: var(--warn); }
     .step.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,122,255,0.12); }
+    .step.done   { border-color: #34c759; }
 
-    .step-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 20px 20px 0;
-    }
-
+    .step-header { display: flex; align-items: flex-start; gap: 16px; padding: 20px 20px 0; }
     .step-num {
-      width: 32px; height: 32px;
-      border-radius: 50%;
+      width: 32px; height: 32px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
+      font-size: 14px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
     }
     .step-num.blue   { background: var(--accent); color: white; }
-    .step-num.green  { background: var(--accent2); color: white; }
+    .step-num.green  { background: #34c759; color: white; }
     .step-num.orange { background: var(--warn); color: white; }
 
     .step-title-group { flex: 1; }
     .step-title { font-size: 17px; font-weight: 600; }
-    .step-desc  { font-size: 14px; color: var(--muted); margin-top: 3px; }
+    .step-desc  { font-size: 14px; color: var(--text-muted); margin-top: 3px; }
 
     .step-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 3px 9px;
-      border-radius: 6px;
-      flex-shrink: 0;
-      margin-top: 4px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; padding: 3px 9px; border-radius: 6px; flex-shrink: 0; margin-top: 4px;
     }
     .step-label.required { background: #fff3e0; color: #e65100; }
     .step-label.optional { background: #e8f5e9; color: #2e7d32; }
@@ -134,310 +91,165 @@
 
     /* ── Instruction list ────────────────────────────────────────────── */
     .instr { display: flex; flex-direction: column; gap: 10px; }
-
-    .instr-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 14px;
-    }
-
+    .instr-item { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; }
     .instr-n {
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: 1.5px solid var(--border);
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--bg); border: 1.5px solid var(--border);
       display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; color: var(--muted);
-      flex-shrink: 0;
-      margin-top: 1px;
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+      flex-shrink: 0; margin-top: 1px;
     }
 
-    /* ── Warning box ─────────────────────────────────────────────────── */
-    .warn-box {
-      background: #fff8ec;
-      border: 1px solid #ffe0a3;
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: 13px;
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
-      line-height: 1.5;
+    /* ── Callout boxes ───────────────────────────────────────────────── */
+    .warn-box, .info-box {
+      border-radius: 10px; padding: 14px 16px; font-size: 13px;
+      display: flex; gap: 10px; margin-top: 14px; line-height: 1.5;
     }
-    .warn-box .icon { font-size: 18px; flex-shrink: 0; }
+    .warn-box { background: #fff8ec; border: 1px solid #ffe0a3; }
+    .info-box { background: #f0f7ff; border: 1px solid #c2deff; }
+    .warn-box .icon, .info-box .icon { font-size: 18px; flex-shrink: 0; }
 
-    .info-box {
-      background: #f0f7ff;
-      border: 1px solid #c2deff;
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: 13px;
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
-      line-height: 1.5;
-    }
-    .info-box .icon { font-size: 18px; flex-shrink: 0; }
-
-    /* ── Code / command blocks ───────────────────────────────────────── */
-    .cmd {
-      display: inline-block;
-      background: #1c1c1e;
-      color: #64b5f6;
-      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-      font-size: 13px;
-      padding: 4px 10px;
-      border-radius: 6px;
-    }
-
-    /* ── File visual ─────────────────────────────────────────────────── */
-    .file-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .file-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-    }
+    /* ── File grid ───────────────────────────────────────────────────── */
+    .file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+    .file-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; font-size: 13px; }
     .file-card .ficon { font-size: 22px; flex-shrink: 0; }
     .file-card .fname { font-weight: 600; font-size: 12px; }
-    .file-card .fdesc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .file-card .fdesc { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
 
-    /* ── Accessibility screenshot mock ──────────────────────────────── */
-    .sys-pref-mock {
-      background: #2c2c2e;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-top: 14px;
-      font-size: 12px;
-    }
-    .sys-pref-titlebar {
-      background: #3a3a3c;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    /* ── Accessibility mock ──────────────────────────────────────────── */
+    .sys-pref-mock { background: #2c2c2e; border-radius: 12px; overflow: hidden; margin-top: 14px; font-size: 12px; }
+    .sys-pref-titlebar { background: #3a3a3c; padding: 10px 16px; display: flex; align-items: center; gap: 8px; }
     .dot { width: 12px; height: 12px; border-radius: 50%; }
-    .dot.r { background: #ff5f57; }
-    .dot.y { background: #ffbd2e; }
-    .dot.g { background: #28c840; }
+    .dot.r { background: #ff5f57; } .dot.y { background: #ffbd2e; } .dot.g { background: #28c840; }
     .sys-pref-name { color: #ebebf5; font-size: 13px; font-weight: 500; margin-left: 8px; }
-    .sys-pref-body {
-      padding: 20px;
-      display: flex;
-      gap: 16px;
-    }
-    .sys-pref-list {
-      background: #1c1c1e;
-      border-radius: 8px;
-      width: 200px;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .sys-pref-item {
-      padding: 8px 12px;
-      color: #ebebf5;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-bottom: 1px solid #3a3a3c;
-    }
+    .sys-pref-body { padding: 20px; display: flex; gap: 16px; }
+    .sys-pref-list { background: #1c1c1e; border-radius: 8px; width: 200px; flex-shrink: 0; overflow: hidden; }
+    .sys-pref-item { padding: 8px 12px; color: #ebebf5; font-size: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #3a3a3c; }
     .sys-pref-item.selected { background: var(--accent); }
     .sys-pref-right { flex: 1; }
-    .sys-pref-applist {
-      background: #1c1c1e;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .sys-pref-app {
-      padding: 8px 12px;
-      color: #ebebf5;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid #3a3a3c;
-    }
+    .sys-pref-applist { background: #1c1c1e; border-radius: 8px; overflow: hidden; }
+    .sys-pref-app { padding: 8px 12px; color: #ebebf5; font-size: 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #3a3a3c; }
     .sys-pref-app:last-child { border-bottom: none; }
-    .toggle {
-      width: 32px; height: 18px;
-      border-radius: 9px;
-      margin-left: auto;
-      flex-shrink: 0;
+    .toggle { width: 32px; height: 18px; border-radius: 9px; margin-left: auto; flex-shrink: 0; }
+    .toggle.on  { background: #34c759; } .toggle.off { background: #636366; }
+    .toggle-knob { width: 14px; height: 14px; background: white; border-radius: 50%; margin: 2px; }
+    .toggle.on  .toggle-knob { margin-left: 16px; } .toggle.off .toggle-knob { margin-left: 2px; }
+    .lock-hint { color: #ebebf5; font-size: 11px; margin-top: 10px; opacity: 0.6; display: flex; align-items: center; gap: 6px; }
+    .highlight-ring { outline: 2px solid #34c759; outline-offset: 2px; border-radius: 8px; }
+
+    /* ── Terminal mock ───────────────────────────────────────────────── */
+    .terminal-mock { background: #1e1e1e; border-radius: 10px; overflow: hidden; margin-top: 14px; font-size: 12px; }
+    .terminal-bar { background: #3a3a3c; padding: 10px 14px; display: flex; align-items: center; gap: 6px; }
+    .terminal-title { color: #ebebf5; font-size: 12px; font-weight: 500; margin-left: 8px; opacity: 0.7; }
+    .terminal-body { padding: 14px 16px; font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace; }
+    .t-line { display: flex; align-items: flex-start; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+    .t-line:last-child { margin-bottom: 0; }
+    .t-prompt { color: #64f58d; font-weight: 700; flex-shrink: 0; }
+    .t-cmd { color: #ebebf5; word-break: break-all; }
+    .t-comment { color: #6a9955; font-style: italic; }
+    .t-cursor { display: inline-block; width: 8px; height: 14px; background: #ebebf5; animation: blink 1s step-end infinite; vertical-align: text-bottom; margin-left: 2px; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── Gatekeeper dialog mock ──────────────────────────────────────── */
+    .macos-dialog-mock {
+      background: #f0f0f0;
+      border-radius: 14px;
+      padding: 28px 24px 20px;
+      max-width: 340px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 0 0 0.5px rgba(0,0,0,0.15);
+      margin: 14px auto 0;
+      text-align: center;
     }
-    .toggle.on  { background: var(--accent2); }
-    .toggle.off { background: #636366; }
-    .toggle-knob {
-      width: 14px; height: 14px;
-      background: white;
-      border-radius: 50%;
-      margin: 2px;
-      margin-left: auto;
+    .dialog-icon-wrap { position: relative; display: inline-block; margin-bottom: 14px; }
+    .dialog-app-icon {
+      width: 64px; height: 64px; background: #1c1c1e; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: monospace; font-size: 22px; color: #64f58d; font-weight: 700;
     }
-    .toggle.on  .toggle-knob { margin-left: 16px; }
-    .toggle.off .toggle-knob { margin-left: 2px; }
-    .lock-hint {
-      color: #ebebf5;
-      font-size: 11px;
-      margin-top: 10px;
-      opacity: 0.6;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .dialog-warn-badge {
+      position: absolute; bottom: -4px; right: -8px;
+      width: 26px; height: 26px; background: #ff9500; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; border: 2px solid #f0f0f0;
     }
-    .highlight-ring {
-      outline: 2px solid var(--accent2);
-      outline-offset: 2px;
-      border-radius: 8px;
+    .dialog-title { font-size: 15px; font-weight: 700; color: #1c1c1e; margin-bottom: 10px; }
+    .dialog-body { font-size: 12px; color: #555; line-height: 1.5; margin-bottom: 18px; }
+    .dialog-btns { display: flex; gap: 10px; justify-content: center; }
+    .dialog-btn {
+      flex: 1; padding: 8px 0; border-radius: 8px; border: none;
+      font-size: 13px; font-weight: 500; cursor: default;
+    }
+    .dialog-btn.cancel { background: #d1d1d6; color: #1c1c1e; }
+    .dialog-btn.destroy { background: #ff3b30; color: white; }
+    .dont-click {
+      position: relative; display: inline-block;
+    }
+    .dont-click::after {
+      content: "✕ Don't click this";
+      position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
+      background: #ff3b30; color: white; font-size: 10px; font-weight: 600;
+      padding: 3px 8px; border-radius: 6px; white-space: nowrap;
     }
 
-    /* ── Usage demo ──────────────────────────────────────────────────── */
-    .demo-box {
-      background: #1c1c1e;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 14px;
+    /* ── Context menu mock ───────────────────────────────────────────── */
+    .fix-row { display: flex; align-items: center; gap: 24px; margin-top: 14px; justify-content: center; flex-wrap: wrap; }
+    .fix-arrow { font-size: 24px; color: var(--text-muted); flex-shrink: 0; }
+    .context-menu-mock {
+      background: rgba(240,240,245,0.95);
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18), 0 0 0 0.5px rgba(0,0,0,0.1);
+      overflow: hidden; min-width: 180px; font-size: 13px;
     }
-    .demo-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid #3a3a3c;
-      font-size: 13px;
-    }
+    .ctx-item { padding: 7px 14px; color: #1c1c1e; display: flex; align-items: center; gap: 8px; }
+    .ctx-item.highlight { background: var(--accent); color: white; font-weight: 600; }
+    .ctx-item.muted { color: var(--text-muted); }
+    .ctx-sep { height: 1px; background: rgba(0,0,0,0.1); margin: 3px 0; }
+    .fix-label { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 8px; }
+    .fix-label strong { color: #34c759; }
+
+    /* ── Demo box ────────────────────────────────────────────────────── */
+    .demo-box { background: #1c1c1e; border-radius: 12px; padding: 20px; margin-top: 14px; }
+    .demo-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #3a3a3c; font-size: 13px; }
     .demo-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .demo-trigger {
-      background: #0a2540;
-      color: #64b5f6;
-      font-family: monospace;
-      font-weight: 700;
-      font-size: 14px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
+    .demo-trigger { background: #0a2540; color: #64b5f6; font-family: monospace; font-weight: 700; font-size: 14px; padding: 4px 10px; border-radius: 6px; flex-shrink: 0; }
     .demo-arrow { color: #636366; font-size: 16px; flex-shrink: 0; }
     .demo-text { color: #ebebf5; line-height: 1.4; }
 
-    /* ── Snippet editor preview ─────────────────────────────────────── */
-    .editor-mock {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      margin-top: 14px;
-    }
-    .editor-titlebar {
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 16px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    /* ── Editor mock ─────────────────────────────────────────────────── */
+    .editor-mock { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 14px; }
+    .editor-titlebar { background: var(--bg); border-bottom: 1px solid var(--border); padding: 10px 16px; font-size: 12px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
     .editor-body { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
-    .editor-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--bg);
-      border-radius: 8px;
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-    }
-    .editor-pill {
-      background: #e8f2ff;
-      color: #0055cc;
-      font-family: monospace;
-      font-weight: 700;
-      font-size: 12px;
-      padding: 3px 8px;
-      border-radius: 5px;
-      white-space: nowrap;
-    }
-    .editor-text { font-size: 12px; color: var(--muted); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .editor-row { display: flex; align-items: center; gap: 10px; background: var(--bg); border-radius: 8px; padding: 10px 12px; border: 1px solid var(--border); }
+    .editor-pill { background: #e8f2ff; color: #0055cc; font-family: monospace; font-weight: 700; font-size: 12px; padding: 3px 8px; border-radius: 5px; white-space: nowrap; }
+    .editor-text { font-size: 12px; color: var(--text-muted); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* ── Q&A ─────────────────────────────────────────────────────────── */
+    /* ── FAQ ─────────────────────────────────────────────────────────── */
     .faq { display: flex; flex-direction: column; gap: 12px; }
-    .faq-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 20px;
-    }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; }
     .faq-q { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
-    .faq-a { font-size: 14px; color: var(--muted); line-height: 1.55; }
+    .faq-a { font-size: 14px; color: var(--text-muted); line-height: 1.55; }
 
     /* ── Footer ──────────────────────────────────────────────────────── */
-    footer {
-      text-align: center;
-      padding: 40px 24px;
-      color: var(--muted);
-      font-size: 13px;
-      border-top: 1px solid var(--border);
-      margin-top: 0;
-    }
+    footer { text-align: center; padding: 40px 24px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border); }
   </style>
 </head>
 <body>
 
-<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <div class="hero">
-  <div class="hero-logo">Typing<span>Demo</span></div>
+  <div class="hero-logo">Type<span>Act</span></div>
   <div class="hero-sub">Simulate real-time typing during your demos — no licences, no subscriptions.</div>
   <div class="hero-badge">📋 Installation Guide &nbsp;·&nbsp; macOS</div>
 </div>
 
-<!-- ── Main ──────────────────────────────────────────────────────────────── -->
 <div class="container">
 
   <!-- PACKAGE CONTENTS -->
   <div class="section-title">📦 Package contents</div>
   <div class="file-grid" style="margin-bottom:48px">
-    <div class="file-card">
-      <div class="ficon">⚙️</div>
-      <div>
-        <div class="fname">INSTALLA.command</div>
-        <div class="fdesc">Run once to install</div>
-      </div>
-    </div>
-    <div class="file-card">
-      <div class="ficon">▶️</div>
-      <div>
-        <div class="fname">avvia.command</div>
-        <div class="fdesc">Start before each demo</div>
-      </div>
-    </div>
-    <div class="file-card">
-      <div class="ficon">🌐</div>
-      <div>
-        <div class="fname">gestisci_snippet.html</div>
-        <div class="fdesc">Manage your snippets</div>
-      </div>
-    </div>
-    <div class="file-card">
-      <div class="ficon">⚙️</div>
-      <div>
-        <div class="fname">snippets.json</div>
-        <div class="fdesc">Configuration (auto)</div>
-      </div>
-    </div>
+    <div class="file-card"><div class="ficon">⚙️</div><div><div class="fname">INSTALLA.command</div><div class="fdesc">Run once to install</div></div></div>
+    <div class="file-card"><div class="ficon">▶️</div><div><div class="fname">avvia.command</div><div class="fdesc">Start before each demo</div></div></div>
+    <div class="file-card"><div class="ficon">🌐</div><div><div class="fname">gestisci_snippet.html</div><div class="fdesc">Manage your snippets</div></div></div>
+    <div class="file-card"><div class="ficon">⚙️</div><div><div class="fname">snippets.json</div><div class="fdesc">Configuration (auto)</div></div></div>
   </div>
 
   <!-- INSTALLATION -->
@@ -456,22 +268,10 @@
       </div>
       <div class="step-body">
         <div class="instr">
-          <div class="instr-item">
-            <div class="instr-n">1</div>
-            <div>Click the link shared by your colleague, or go to the GitHub repository</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">2</div>
-            <div>Click <strong>Code → Download ZIP</strong></div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">3</div>
-            <div>Open the downloaded .zip — macOS will unzip it automatically</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">4</div>
-            <div>Move the <strong>TypeAct</strong> folder wherever you like (e.g. <strong>Documents</strong>)</div>
-          </div>
+          <div class="instr-item"><div class="instr-n">1</div><div>Click the link shared by your colleague, or go to the GitHub repository</div></div>
+          <div class="instr-item"><div class="instr-n">2</div><div>Click <strong>Code → Download ZIP</strong></div></div>
+          <div class="instr-item"><div class="instr-n">3</div><div>Open the downloaded .zip — macOS will unzip it automatically</div></div>
+          <div class="instr-item"><div class="instr-n">4</div><div>Move the <strong>TypeAct</strong> folder wherever you like (e.g. <strong>Documents</strong>)</div></div>
         </div>
         <div class="info-box">
           <div class="icon">💡</div>
@@ -485,6 +285,46 @@
       <div class="step-header">
         <div class="step-num blue">2</div>
         <div class="step-title-group">
+          <div class="step-title">Fix file permissions in Terminal</div>
+          <div class="step-desc">Required after downloading a ZIP from GitHub — macOS removes executable permissions</div>
+        </div>
+        <div class="step-label once">Once</div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item"><div class="instr-n">1</div><div>Open <strong>Terminal</strong> (search with Spotlight: <strong>⌘Space</strong> → type "Terminal")</div></div>
+          <div class="instr-item"><div class="instr-n">2</div><div>Copy and paste this command, then press <strong>Enter</strong>:</div></div>
+        </div>
+
+        <div class="terminal-mock">
+          <div class="terminal-bar">
+            <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+            <span class="terminal-title">Terminal</span>
+          </div>
+          <div class="terminal-body">
+            <div class="t-line">
+              <span class="t-prompt">~$</span>
+              <span class="t-cmd">chmod +x ~/Downloads/TypeAct-main/INSTALLA.command ~/Downloads/TypeAct-main/avvia.command</span>
+            </div>
+            <div class="t-line" style="margin-top:4px">
+              <span class="t-prompt">~$</span>
+              <span class="t-cursor"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top:14px">
+          <div class="icon">💡</div>
+          <div>If you moved the folder to Documents, replace <code style="background:#dbeeff;padding:1px 5px;border-radius:4px">~/Downloads/TypeAct-main</code> with the actual path to your folder.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num blue">3</div>
+        <div class="step-title-group">
           <div class="step-title">Run INSTALLA.command</div>
           <div class="step-desc">Installs the required dependency and prepares the files</div>
         </div>
@@ -492,34 +332,22 @@
       </div>
       <div class="step-body">
         <div class="instr">
-          <div class="instr-item">
-            <div class="instr-n">1</div>
-            <div>Open the <strong>TypeAct</strong> folder</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">2</div>
-            <div>Double-click <strong>INSTALLA.command</strong></div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">3</div>
-            <div>If macOS shows an <em>"unidentified developer"</em> warning, go to <strong>System Settings → Privacy &amp; Security</strong> and click <strong>"Open Anyway"</strong></div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">4</div>
-            <div>Wait for the script to finish — System Settings will open automatically</div>
-          </div>
+          <div class="instr-item"><div class="instr-n">1</div><div>Open the <strong>TypeAct</strong> folder</div></div>
+          <div class="instr-item"><div class="instr-n">2</div><div>Double-click <strong>INSTALLA.command</strong></div></div>
+          <div class="instr-item"><div class="instr-n">3</div><div>If macOS shows a security warning, see the troubleshooting section below</div></div>
+          <div class="instr-item"><div class="instr-n">4</div><div>Wait for the script to finish — System Settings will open automatically</div></div>
         </div>
         <div class="warn-box">
           <div class="icon">⚠️</div>
-          <div><strong>The script will automatically open System Settings</strong> to the Accessibility panel. Continue with step 3 without closing it.</div>
+          <div><strong>The script will automatically open System Settings</strong> to the Accessibility panel. Continue with step 4 without closing it.</div>
         </div>
       </div>
     </div>
 
-    <!-- Step 3 – ACCESSIBILITY (most important) -->
+    <!-- Step 4 – ACCESSIBILITY -->
     <div class="step warn">
       <div class="step-header">
-        <div class="step-num orange">3</div>
+        <div class="step-num orange">4</div>
         <div class="step-title-group">
           <div class="step-title">Grant Accessibility permission to Terminal</div>
           <div class="step-desc">Required — without this TypeAct cannot simulate keyboard input</div>
@@ -528,29 +356,13 @@
       </div>
       <div class="step-body">
         <div class="instr">
-          <div class="instr-item">
-            <div class="instr-n">1</div>
-            <div>In System Settings, find and click <strong>Accessibility</strong> in the left panel</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">2</div>
-            <div>Click the <strong>lock 🔒</strong> at the bottom left and enter your Mac password</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">3</div>
-            <div>Click the <strong>+</strong> button to add a new app</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">4</div>
-            <div>Navigate to <strong>Applications → Utilities</strong>, select <strong>Terminal</strong> and click <strong>Open</strong></div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">5</div>
-            <div>Make sure the toggle next to <strong>Terminal</strong> is <strong>enabled (green)</strong></div>
-          </div>
+          <div class="instr-item"><div class="instr-n">1</div><div>In System Settings, find and click <strong>Accessibility</strong> in the left panel</div></div>
+          <div class="instr-item"><div class="instr-n">2</div><div>Click the <strong>lock 🔒</strong> at the bottom left and enter your Mac password</div></div>
+          <div class="instr-item"><div class="instr-n">3</div><div>Click the <strong>+</strong> button to add a new app</div></div>
+          <div class="instr-item"><div class="instr-n">4</div><div>Navigate to <strong>Applications → Utilities</strong>, select <strong>Terminal</strong> and click <strong>Open</strong></div></div>
+          <div class="instr-item"><div class="instr-n">5</div><div>Make sure the toggle next to <strong>Terminal</strong> is <strong>enabled (green)</strong></div></div>
         </div>
 
-        <!-- Visual mock of the Accessibility panel -->
         <div class="sys-pref-mock">
           <div class="sys-pref-titlebar">
             <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
@@ -582,10 +394,10 @@
       </div>
     </div>
 
-    <!-- Step 4 -->
+    <!-- Step 5 -->
     <div class="step done">
       <div class="step-header">
-        <div class="step-num green">4</div>
+        <div class="step-num green">5</div>
         <div class="step-title-group">
           <div class="step-title">Customise your snippets</div>
           <div class="step-desc">Set up the texts you want to appear during your demos</div>
@@ -594,38 +406,17 @@
       </div>
       <div class="step-body">
         <div class="instr">
-          <div class="instr-item">
-            <div class="instr-n">1</div>
-            <div>Open <strong>gestisci_snippet.html</strong> with <strong>Chrome</strong> (right-click → Open with → Chrome)</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">2</div>
-            <div>Click <strong>"Open snippets.json"</strong> and select the file in the TypeAct folder</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">3</div>
-            <div>Add, edit or delete snippets using the visual interface</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">4</div>
-            <div>Press <strong>⌘S</strong> to save directly to the file</div>
-          </div>
+          <div class="instr-item"><div class="instr-n">1</div><div>Open <strong>gestisci_snippet.html</strong> with <strong>Chrome</strong> (right-click → Open with → Chrome)</div></div>
+          <div class="instr-item"><div class="instr-n">2</div><div>Click <strong>"Open snippets.json"</strong> and select the file in the TypeAct folder</div></div>
+          <div class="instr-item"><div class="instr-n">3</div><div>Add, edit or delete snippets using the visual interface</div></div>
+          <div class="instr-item"><div class="instr-n">4</div><div>Press <strong>⌘S</strong> to save directly to the file</div></div>
         </div>
-
         <div class="editor-mock">
           <div class="editor-titlebar">✏️ gestisci_snippet.html</div>
           <div class="editor-body">
-            <div class="editor-row">
-              <div class="editor-pill">/1</div>
-              <div class="editor-text">Hi! I was looking for information about your product — can you help me?</div>
-            </div>
-            <div class="editor-row">
-              <div class="editor-pill">/2</div>
-              <div class="editor-text">What are the lead times for a custom order?</div>
-            </div>
-            <div class="editor-row" style="border: 2px dashed var(--border); background: transparent; justify-content: center; color: var(--muted); font-size: 13px;">
-              ＋ Add snippet
-            </div>
+            <div class="editor-row"><div class="editor-pill">/1</div><div class="editor-text">Hi! I was looking for information about your product — can you help me?</div></div>
+            <div class="editor-row"><div class="editor-pill">/2</div><div class="editor-text">What are the lead times for a custom order?</div></div>
+            <div class="editor-row" style="border: 2px dashed var(--border); background: transparent; justify-content: center; color: var(--text-muted); font-size: 13px;">＋ Add snippet</div>
           </div>
         </div>
       </div>
@@ -647,18 +438,9 @@
       </div>
       <div class="step-body">
         <div class="instr">
-          <div class="instr-item">
-            <div class="instr-n">1</div>
-            <div>Double-click <strong>avvia.command</strong> — a Terminal window opens</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">2</div>
-            <div>You should see your loaded snippets listed ✓</div>
-          </div>
-          <div class="instr-item">
-            <div class="instr-n">3</div>
-            <div><strong>Minimise</strong> the window — do not close it</div>
-          </div>
+          <div class="instr-item"><div class="instr-n">1</div><div>Double-click <strong>avvia.command</strong> — a Terminal window opens</div></div>
+          <div class="instr-item"><div class="instr-n">2</div><div>You should see your loaded snippets listed ✓</div></div>
+          <div class="instr-item"><div class="instr-n">3</div><div><strong>Minimise</strong> the window — do not close it</div></div>
         </div>
         <div class="info-box">
           <div class="icon">💡</div>
@@ -677,21 +459,9 @@
       </div>
       <div class="step-body">
         <div class="demo-box">
-          <div class="demo-row">
-            <div class="demo-trigger">/1</div>
-            <div class="demo-arrow">→</div>
-            <div class="demo-text">Hi! I was looking for information about your product — can you help me?</div>
-          </div>
-          <div class="demo-row">
-            <div class="demo-trigger">/2</div>
-            <div class="demo-arrow">→</div>
-            <div class="demo-text">What are the lead times for a custom order?</div>
-          </div>
-          <div class="demo-row">
-            <div class="demo-trigger">/3</div>
-            <div class="demo-arrow">→</div>
-            <div class="demo-text">Your custom snippet text here...</div>
-          </div>
+          <div class="demo-row"><div class="demo-trigger">/1</div><div class="demo-arrow">→</div><div class="demo-text">Hi! I was looking for information about your product — can you help me?</div></div>
+          <div class="demo-row"><div class="demo-trigger">/2</div><div class="demo-arrow">→</div><div class="demo-text">What are the lead times for a custom order?</div></div>
+          <div class="demo-row"><div class="demo-trigger">/3</div><div class="demo-arrow">→</div><div class="demo-text">Your custom snippet text here...</div></div>
         </div>
         <div class="info-box" style="margin-top:14px">
           <div class="icon">⌨️</div>
@@ -702,33 +472,86 @@
 
   </div>
 
-  <!-- FAQ -->
-  <div class="section-title">❓ Frequently asked questions</div>
+  <!-- TROUBLESHOOTING -->
+  <div class="section-title">🔧 Troubleshooting</div>
   <div class="faq" style="margin-bottom:48px">
 
+    <!-- Gatekeeper -->
+    <div class="faq-item">
+      <div class="faq-q">"avvia.command" or "INSTALLA.command" Not Opened</div>
+      <div class="faq-a" style="margin-bottom:0">macOS Gatekeeper blocks unsigned files downloaded from the internet. <strong>Do not click "Move to Bin"</strong> — use right-click → Open instead.</div>
+
+      <div class="fix-row">
+        <div>
+          <div class="macos-dialog-mock">
+            <div class="dialog-icon-wrap">
+              <div class="dialog-app-icon">>_</div>
+              <div class="dialog-warn-badge">!</div>
+            </div>
+            <div class="dialog-title">"avvia.command" Not Opened</div>
+            <div class="dialog-body">Apple could not verify "avvia.command" is free of malware that may harm your Mac or compromise your privacy.</div>
+            <div class="dialog-btns">
+              <button class="dialog-btn cancel">Done</button>
+              <button class="dialog-btn destroy dont-click">Move to Bin</button>
+            </div>
+          </div>
+          <div class="fix-label">Click <strong>Done</strong> — then use the method below</div>
+        </div>
+
+        <div class="fix-arrow">→</div>
+
+        <div>
+          <div class="context-menu-mock">
+            <div class="ctx-item highlight">✓ Open</div>
+            <div class="ctx-sep"></div>
+            <div class="ctx-item">Open With ▶</div>
+            <div class="ctx-item">Get Info</div>
+            <div class="ctx-item">Rename</div>
+            <div class="ctx-sep"></div>
+            <div class="ctx-item muted">Move to Bin</div>
+          </div>
+          <div class="fix-label"><strong>Right-click</strong> the file → <strong>Open</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- chmod -->
+    <div class="faq-item">
+      <div class="faq-q">"could not be executed because you do not have appropriate access privileges"</div>
+      <div class="faq-a">The file is missing executable permission — this happens when unzipping from GitHub. Open Terminal and run:</div>
+      <div class="terminal-mock" style="margin-top:12px">
+        <div class="terminal-bar">
+          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+          <span class="terminal-title">Terminal</span>
+        </div>
+        <div class="terminal-body">
+          <div class="t-line">
+            <span class="t-prompt">~$</span>
+            <span class="t-cmd">chmod +x ~/Downloads/TypeAct-main/INSTALLA.command ~/Downloads/TypeAct-main/avvia.command</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script not responding -->
     <div class="faq-item">
       <div class="faq-q">The script doesn't respond when I type the trigger</div>
-      <div class="faq-a">Check that Terminal has the Accessibility permission enabled (Step 3). If you added it but it still doesn't work, remove it and add it again, then restart the script.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">macOS says "unidentified developer" when I open INSTALLA.command</div>
-      <div class="faq-a">This is normal for unsigned .command files. Go to <strong>System Settings → Privacy &amp; Security</strong>, scroll down and click <strong>"Open Anyway"</strong> next to the file name.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">Does it work on Windows?</div>
-      <div class="faq-a">No, TypeAct is designed for macOS only. The Accessibility API it relies on is specific to macOS.</div>
+      <div class="faq-a">Check that Terminal has the Accessibility permission enabled (Step 4). If you added it but it still doesn't work, remove it and add it again, then restart avvia.command.</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q">How do I add new snippets?</div>
-      <div class="faq-a">Open <strong>gestisci_snippet.html</strong> in Chrome, load your snippets.json, add the snippets you want and save with ⌘S. Restart avvia.command to load the changes.</div>
+      <div class="faq-a">Open <strong>gestisci_snippet.html</strong> in Chrome, load your snippets.json, add the snippets you want and save with ⌘S. Restart avvia.command to load them.</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q">Does it work with Slack, Teams, the browser?</div>
-      <div class="faq-a">Yes — it works in any application where you can type text: Slack, Microsoft Teams, Chrome, Safari, PowerPoint, Word, and more.</div>
+      <div class="faq-a">Yes — it works in any app where you can type text: Slack, Microsoft Teams, Chrome, Safari, PowerPoint, Word, and more.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Does it work on iPad or Windows?</div>
+      <div class="faq-a">No — TypeAct is macOS only. It relies on macOS Accessibility APIs that don't exist on iPadOS or Windows.</div>
     </div>
 
   </div>
