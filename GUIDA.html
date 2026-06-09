@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypingDemo – Guida all'installazione</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg:       #f5f5f7;
+      --surface:  #ffffff;
+      --border:   #e2e2e7;
+      --accent:   #007aff;
+      --accent2:  #34c759;
+      --warn:     #ff9500;
+      --danger:   #ff3b30;
+      --text:     #1c1c1e;
+      --muted:    #8e8e93;
+      --radius:   14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Hero ───────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: white;
+      padding: 60px 24px 50px;
+      text-align: center;
+    }
+    .hero-logo {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .hero-logo span { color: #64b5f6; }
+    .hero-sub {
+      font-size: 18px;
+      opacity: 0.75;
+      max-width: 520px;
+      margin: 0 auto 28px;
+      line-height: 1.5;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* ── Layout ─────────────────────────────────────────────────────── */
+    .container {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── Section header ──────────────────────────────────────────────── */
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Steps ───────────────────────────────────────────────────────── */
+    .steps { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
+
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .step.done   { border-color: #34c759; }
+    .step.warn   { border-color: var(--warn); }
+    .step.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,122,255,0.12); }
+
+    .step-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 20px 0;
+    }
+
+    .step-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-num.blue   { background: var(--accent); color: white; }
+    .step-num.green  { background: var(--accent2); color: white; }
+    .step-num.orange { background: var(--warn); color: white; }
+
+    .step-title-group { flex: 1; }
+    .step-title { font-size: 17px; font-weight: 600; }
+    .step-desc  { font-size: 14px; color: var(--muted); margin-top: 3px; }
+
+    .step-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .step-label.required { background: #fff3e0; color: #e65100; }
+    .step-label.optional { background: #e8f5e9; color: #2e7d32; }
+    .step-label.once     { background: #e3f2fd; color: #1565c0; }
+
+    .step-body { padding: 16px 20px 20px 68px; }
+
+    /* ── Instruction list ────────────────────────────────────────────── */
+    .instr { display: flex; flex-direction: column; gap: 10px; }
+
+    .instr-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .instr-n {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── Warning box ─────────────────────────────────────────────────── */
+    .warn-box {
+      background: #fff8ec;
+      border: 1px solid #ffe0a3;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+    .warn-box .icon { font-size: 18px; flex-shrink: 0; }
+
+    .info-box {
+      background: #f0f7ff;
+      border: 1px solid #c2deff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+    .info-box .icon { font-size: 18px; flex-shrink: 0; }
+
+    /* ── Code / command blocks ───────────────────────────────────────── */
+    .cmd {
+      display: inline-block;
+      background: #1c1c1e;
+      color: #64b5f6;
+      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* ── File visual ─────────────────────────────────────────────────── */
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .file-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .file-card .ficon { font-size: 22px; flex-shrink: 0; }
+    .file-card .fname { font-weight: 600; font-size: 12px; }
+    .file-card .fdesc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+    /* ── Accessibility screenshot mock ──────────────────────────────── */
+    .sys-pref-mock {
+      background: #2c2c2e;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 14px;
+      font-size: 12px;
+    }
+    .sys-pref-titlebar {
+      background: #3a3a3c;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot.r { background: #ff5f57; }
+    .dot.y { background: #ffbd2e; }
+    .dot.g { background: #28c840; }
+    .sys-pref-name { color: #ebebf5; font-size: 13px; font-weight: 500; margin-left: 8px; }
+    .sys-pref-body {
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+    }
+    .sys-pref-list {
+      background: #1c1c1e;
+      border-radius: 8px;
+      width: 200px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .sys-pref-item {
+      padding: 8px 12px;
+      color: #ebebf5;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #3a3a3c;
+    }
+    .sys-pref-item.selected { background: var(--accent); }
+    .sys-pref-right { flex: 1; }
+    .sys-pref-applist {
+      background: #1c1c1e;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .sys-pref-app {
+      padding: 8px 12px;
+      color: #ebebf5;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #3a3a3c;
+    }
+    .sys-pref-app:last-child { border-bottom: none; }
+    .toggle {
+      width: 32px; height: 18px;
+      border-radius: 9px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .toggle.on  { background: var(--accent2); }
+    .toggle.off { background: #636366; }
+    .toggle-knob {
+      width: 14px; height: 14px;
+      background: white;
+      border-radius: 50%;
+      margin: 2px;
+      margin-left: auto;
+    }
+    .toggle.on  .toggle-knob { margin-left: 16px; }
+    .toggle.off .toggle-knob { margin-left: 2px; }
+    .lock-hint {
+      color: #ebebf5;
+      font-size: 11px;
+      margin-top: 10px;
+      opacity: 0.6;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .highlight-ring {
+      outline: 2px solid var(--accent2);
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+
+    /* ── Usage demo ──────────────────────────────────────────────────── */
+    .demo-box {
+      background: #1c1c1e;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 14px;
+    }
+    .demo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #3a3a3c;
+      font-size: 13px;
+    }
+    .demo-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .demo-trigger {
+      background: #0a2540;
+      color: #64b5f6;
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .demo-arrow { color: #636366; font-size: 16px; flex-shrink: 0; }
+    .demo-text { color: #ebebf5; line-height: 1.4; }
+
+    /* ── Snippet editor preview ─────────────────────────────────────── */
+    .editor-mock {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+    .editor-titlebar {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .editor-body { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .editor-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+    }
+    .editor-pill {
+      background: #e8f2ff;
+      color: #0055cc;
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+    .editor-text { font-size: 12px; color: var(--muted); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* ── Q&A ─────────────────────────────────────────────────────────── */
+    .faq { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+    }
+    .faq-q { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+    .faq-a { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* ── Footer ──────────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-logo">Typing<span>Demo</span></div>
+  <div class="hero-sub">Simula la digitazione in tempo reale durante le tue demo — senza licenze, senza abbonamenti.</div>
+  <div class="hero-badge">📋 Guida all'installazione &nbsp;·&nbsp; macOS</div>
+</div>
+
+<!-- ── Main ──────────────────────────────────────────────────────────────── -->
+<div class="container">
+
+  <!-- COSA CONTIENE IL PACCHETTO -->
+  <div class="section-title">📦 Contenuto del pacchetto</div>
+  <div class="file-grid" style="margin-bottom:48px">
+    <div class="file-card">
+      <div class="ficon">⚙️</div>
+      <div>
+        <div class="fname">INSTALLA.command</div>
+        <div class="fdesc">Esegui una sola volta</div>
+      </div>
+    </div>
+    <div class="file-card">
+      <div class="ficon">▶️</div>
+      <div>
+        <div class="fname">avvia.command</div>
+        <div class="fdesc">Avvia prima della demo</div>
+      </div>
+    </div>
+    <div class="file-card">
+      <div class="ficon">🌐</div>
+      <div>
+        <div class="fname">gestisci_snippet.html</div>
+        <div class="fdesc">Gestisci i tuoi testi</div>
+      </div>
+    </div>
+    <div class="file-card">
+      <div class="ficon">⚙️</div>
+      <div>
+        <div class="fname">snippets.json</div>
+        <div class="fdesc">Configurazione (auto)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTALLAZIONE -->
+  <div class="section-title">🛠 Installazione — da fare una sola volta</div>
+  <div class="steps">
+
+    <!-- Step 1 -->
+    <div class="step active">
+      <div class="step-header">
+        <div class="step-num blue">1</div>
+        <div class="step-title-group">
+          <div class="step-title">Scarica e decomprimi il pacchetto</div>
+          <div class="step-desc">Dove vuoi sul tuo Mac — es. nella cartella Documenti</div>
+        </div>
+        <div class="step-label once">Una volta</div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item">
+            <div class="instr-n">1</div>
+            <div>Clicca sul link che ti ha condiviso il tuo collega, oppure vai al repository GitHub</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">2</div>
+            <div>Clicca <strong>Code → Download ZIP</strong></div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">3</div>
+            <div>Apri il file .zip scaricato — macOS lo decomprime automaticamente</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">4</div>
+            <div>Sposta la cartella <strong>TypingDemo</strong> dove preferisci (es. <strong>Documenti</strong>)</div>
+          </div>
+        </div>
+        <div class="info-box">
+          <div class="icon">💡</div>
+          <div>Tieni la cartella sempre nello stesso posto — se la sposti dopo l'installazione, potrebbe servire ripetere il passo 2.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num blue">2</div>
+        <div class="step-title-group">
+          <div class="step-title">Esegui INSTALLA.command</div>
+          <div class="step-desc">Installa la dipendenza necessaria e prepara i file</div>
+        </div>
+        <div class="step-label once">Una volta</div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item">
+            <div class="instr-n">1</div>
+            <div>Apri la cartella <strong>TypingDemo</strong></div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">2</div>
+            <div>Doppio click su <strong>INSTALLA.command</strong></div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">3</div>
+            <div>Se macOS mostra un avviso <em>"sviluppatore non identificato"</em>, vai su <strong>Impostazioni di Sistema → Privacy e Sicurezza</strong> e clicca <strong>"Apri comunque"</strong></div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">4</div>
+            <div>Attendi che lo script finisca — si apriranno le Impostazioni di Sistema</div>
+          </div>
+        </div>
+        <div class="warn-box">
+          <div class="icon">⚠️</div>
+          <div><strong>Lo script aprirà automaticamente le Impostazioni di Sistema</strong> al pannello Accessibilità. Continua con il passo 3 senza chiuderle.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 – ACCESSIBILITÀ (più importante) -->
+    <div class="step warn">
+      <div class="step-header">
+        <div class="step-num orange">3</div>
+        <div class="step-title-group">
+          <div class="step-title">Concedi il permesso Accessibilità a Terminal</div>
+          <div class="step-desc">Passaggio obbligatorio — senza questo TypingDemo non può simulare la tastiera</div>
+        </div>
+        <div class="step-label required">Obbligatorio</div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item">
+            <div class="instr-n">1</div>
+            <div>Nelle Impostazioni di Sistema, cerca e clicca <strong>Accessibilità</strong> nel pannello di sinistra</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">2</div>
+            <div>Clicca il <strong>lucchetto 🔒</strong> in basso a sinistra e inserisci la password del Mac</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">3</div>
+            <div>Clicca il pulsante <strong>+</strong> per aggiungere una nuova app</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">4</div>
+            <div>Naviga in <strong>Applicazioni → Utility</strong> e seleziona <strong>Terminale</strong>, poi clicca <strong>Apri</strong></div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">5</div>
+            <div>Assicurati che il toggle accanto a <strong>Terminale</strong> sia <strong>attivo (verde)</strong></div>
+          </div>
+        </div>
+
+        <!-- Mock visivo del pannello Accessibilità -->
+        <div class="sys-pref-mock">
+          <div class="sys-pref-titlebar">
+            <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+            <div class="sys-pref-name">Impostazioni di Sistema</div>
+          </div>
+          <div class="sys-pref-body">
+            <div class="sys-pref-list">
+              <div class="sys-pref-item">🔒 Password</div>
+              <div class="sys-pref-item">👁 Schermata di blocco</div>
+              <div class="sys-pref-item selected">♿ Accessibilità</div>
+              <div class="sys-pref-item">📍 Localizzazione</div>
+              <div class="sys-pref-item">🎙 Microfono</div>
+            </div>
+            <div class="sys-pref-right">
+              <div class="sys-pref-applist highlight-ring">
+                <div class="sys-pref-app">
+                  <span>🖥</span> Altro.app
+                  <div class="toggle off"><div class="toggle-knob"></div></div>
+                </div>
+                <div class="sys-pref-app" style="background: rgba(52,199,89,0.12)">
+                  <span>🖥</span> <strong style="color:#64f58d">Terminale</strong>
+                  <div class="toggle on" style="margin-left:auto"><div class="toggle-knob"></div></div>
+                </div>
+              </div>
+              <div class="lock-hint">🔒 Clicca il lucchetto per sbloccare</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step done">
+      <div class="step-header">
+        <div class="step-num green">4</div>
+        <div class="step-title-group">
+          <div class="step-title">Personalizza i tuoi snippet</div>
+          <div class="step-desc">Definisci i testi che vuoi far apparire durante le demo</div>
+        </div>
+        <div class="step-label optional">Subito dopo</div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item">
+            <div class="instr-n">1</div>
+            <div>Apri <strong>gestisci_snippet.html</strong> con <strong>Chrome</strong> (doppio click → Apri con → Chrome)</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">2</div>
+            <div>Clicca <strong>"Apri snippets.json"</strong> e seleziona il file nella cartella TypingDemo</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">3</div>
+            <div>Modifica, aggiungi o elimina snippet con l'interfaccia grafica</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">4</div>
+            <div>Premi <strong>⌘S</strong> per salvare direttamente sul file</div>
+          </div>
+        </div>
+
+        <div class="editor-mock">
+          <div class="editor-titlebar">✏️ gestisci_snippet.html</div>
+          <div class="editor-body">
+            <div class="editor-row">
+              <div class="editor-pill">/1</div>
+              <div class="editor-text">Il mio cliente ha un prodotto fotosensibile, colliri con vitamina E…</div>
+            </div>
+            <div class="editor-row">
+              <div class="editor-pill">/2</div>
+              <div class="editor-text">Chi gestisce la produzione di flaconi iniettabili a Zaragoza?</div>
+            </div>
+            <div class="editor-row" style="border: 2px dashed var(--border); background: transparent; justify-content: center; color: var(--muted); font-size: 13px;">
+              ＋ Aggiungi snippet
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- USO QUOTIDIANO -->
+  <div class="section-title">🚀 Utilizzo durante le demo</div>
+  <div class="steps" style="margin-bottom:48px">
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num blue">A</div>
+        <div class="step-title-group">
+          <div class="step-title">Prima della demo: avvia lo script</div>
+          <div class="step-desc">Da tenere sempre aperto durante tutta la demo</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item">
+            <div class="instr-n">1</div>
+            <div>Doppio click su <strong>avvia.command</strong> — si apre una finestra Terminale</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">2</div>
+            <div>Dovresti vedere la lista dei tuoi snippet caricati ✓</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">3</div>
+            <div><strong>Minimizza</strong> la finestra — non chiuderla</div>
+          </div>
+        </div>
+        <div class="info-box">
+          <div class="icon">💡</div>
+          <div>La finestra Terminale deve restare aperta per tutta la durata della demo. Puoi minimizzarla, ma non chiuderla.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step done">
+      <div class="step-header">
+        <div class="step-num green">B</div>
+        <div class="step-title-group">
+          <div class="step-title">Durante la demo: digita il trigger</div>
+          <div class="step-desc">Funziona in qualsiasi app — Slack, browser, Teams, ecc.</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="demo-box">
+          <div class="demo-row">
+            <div class="demo-trigger">/1</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">Il mio cliente ha un prodotto fotosensibile, colliri con vitamina E. Quale flacone devo usare?</div>
+          </div>
+          <div class="demo-row">
+            <div class="demo-trigger">/2</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">Chi gestisce la produzione di flaconi iniettabili a Zaragoza?</div>
+          </div>
+          <div class="demo-row">
+            <div class="demo-trigger">/3</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">Il tuo snippet personalizzato...</div>
+          </div>
+        </div>
+        <div class="info-box" style="margin-top:14px">
+          <div class="icon">⌨️</div>
+          <div>Clicca nel campo testo dell'app dove vuoi che appaia il testo (es. la chat di Slack), poi digita il trigger. Lo script cancellerà il trigger e scriverà il testo carattere per carattere.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-title">❓ Domande frequenti</div>
+  <div class="faq" style="margin-bottom:48px">
+
+    <div class="faq-item">
+      <div class="faq-q">Lo script non risponde quando digito il trigger</div>
+      <div class="faq-a">Verifica che il Terminale abbia il permesso Accessibilità attivo (Passo 3). Se lo hai aggiunto ma non funziona, prova a rimuoverlo e aggiungerlo di nuovo, poi riavvia lo script.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">macOS dice "sviluppatore non identificato" quando apro INSTALLA.command</div>
+      <div class="faq-a">Normale per file .command non firmati. Vai in <strong>Impostazioni di Sistema → Privacy e Sicurezza</strong>, scorri in basso e clicca <strong>"Apri comunque"</strong> accanto al nome del file.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Posso usarlo su Windows?</div>
+      <div class="faq-a">No, TypingDemo è progettato per macOS. Il sistema di Accessibilità utilizzato è specifico di macOS.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Come aggiungo nuovi snippet?</div>
+      <div class="faq-a">Apri <strong>gestisci_snippet.html</strong> con Chrome, carica il tuo snippets.json, aggiungi gli snippet che vuoi e salva con ⌘S. Riavvia avvia.command per caricare le modifiche.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Funziona con Slack, Teams, il browser?</div>
+      <div class="faq-a">Sì, funziona in qualsiasi applicazione in cui puoi scrivere testo — Slack, Microsoft Teams, Chrome, Safari, PowerPoint, Word, ecc.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  TypingDemo &nbsp;·&nbsp; Per il team di demo Salesforce &nbsp;·&nbsp; Sviluppato internamente
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypingDemo – Gestione Snippet</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg:            #f5f5f7;
+      --surface:       #ffffff;
+      --border:        #e2e2e7;
+      --accent:        #007aff;
+      --accent-light:  #e8f2ff;
+      --danger:        #ff3b30;
+      --danger-light:  #fff0ef;
+      --warn:          #ff9500;
+      --text:          #1c1c1e;
+      --text-muted:    #8e8e93;
+      --trigger-bg:    #f0f7ff;
+      --trigger-color: #0055cc;
+      --radius:        12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────────── */
+    header {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      flex: 1;
+    }
+    .logo .accent { color: var(--accent); }
+
+    .unsaved-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--warn);
+      margin-left: 6px;
+      vertical-align: middle;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .unsaved-dot.on { opacity: 1; }
+
+    /* ── Buttons ─────────────────────────────────────────────────────── */
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary   { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #0069d9; }
+
+    .btn-secondary { background: #e5e5ea; color: var(--text); }
+    .btn-secondary:hover { background: #d1d1d6; }
+
+    .btn-danger    { background: var(--danger-light); color: var(--danger); }
+    .btn-danger:hover { background: #ffd5d3; }
+
+    .btn-ghost     { background: transparent; color: var(--text-muted); }
+    .btn-ghost:hover { background: var(--bg); color: var(--text); }
+
+    .btn-sm { padding: 6px 12px; font-size: 13px; }
+
+    /* ── Main layout ─────────────────────────────────────────────────── */
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+
+    /* ── Empty / welcome state ───────────────────────────────────────── */
+    #emptyState {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-muted);
+    }
+    #emptyState .big-icon { font-size: 56px; margin-bottom: 20px; }
+    #emptyState h2 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    #emptyState p  { font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+
+    /* ── Section header ──────────────────────────────────────────────── */
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+    }
+    .badge {
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ── File banner ─────────────────────────────────────────────────── */
+    #fileBanner {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent-light);
+      color: #004eaa;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+    #fileBanner .fname { font-family: monospace; font-weight: 700; }
+
+    /* ── Snippets list ───────────────────────────────────────────────── */
+    #snippetsList { display: flex; flex-direction: column; gap: 8px; }
+
+    .snippet-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.15s;
+    }
+    .snippet-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .snippet-card.open  { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+
+    .card-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .trigger-pill {
+      background: var(--trigger-bg);
+      color: var(--trigger-color);
+      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 7px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-width: 52px;
+      text-align: center;
+    }
+
+    .card-text {
+      flex: 1;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      padding-top: 3px;
+    }
+
+    .card-chevron {
+      color: var(--text-muted);
+      font-size: 13px;
+      padding-top: 4px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .snippet-card.open .card-chevron { transform: rotate(180deg); }
+
+    /* ── Edit form ───────────────────────────────────────────────────── */
+    .edit-form {
+      padding: 0 16px 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group.trigger-col { width: 150px; flex-shrink: 0; }
+    .form-group.text-col    { flex: 1; }
+
+    .form-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--text-muted);
+    }
+
+    .form-input, .form-textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 11px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      width: 100%;
+      transition: border-color 0.15s, background 0.15s;
+      resize: none;
+    }
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #fff;
+    }
+    .form-input.mono {
+      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-weight: 700;
+      color: var(--trigger-color);
+    }
+    .form-textarea { min-height: 72px; line-height: 1.55; }
+
+    .form-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+    }
+
+    /* ── Add snippet panel ───────────────────────────────────────────── */
+    #addPanel {
+      display: none;
+      background: var(--surface);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-top: 10px;
+    }
+    #addPanel.visible { display: block; }
+
+    .add-panel-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .add-btn-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    /* ── Settings ────────────────────────────────────────────────────── */
+    #settingsCard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-top: 32px;
+    }
+
+    .settings-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .settings-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .settings-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .settings-row:first-child { padding-top: 0; }
+
+    .settings-info { flex: 1; }
+    .settings-info strong { font-size: 14px; font-weight: 500; display: block; }
+    .settings-info small  { font-size: 12px; color: var(--text-muted); }
+
+    .speed-slider {
+      -webkit-appearance: none;
+      width: 140px;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border);
+      outline: none;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .speed-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .speed-value {
+      font-size: 13px;
+      font-family: 'SF Mono', monospace;
+      color: var(--accent);
+      width: 64px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      width: 140px;
+      flex-shrink: 0;
+      margin-top: -6px;
+    }
+    .slider-labels span {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* ── Toast ───────────────────────────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(70px);
+      background: #1c1c1e;
+      color: #fff;
+      padding: 11px 22px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 999;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      white-space: nowrap;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────────────────── -->
+<header>
+  <div class="logo">
+    Typing<span class="accent">Demo</span>
+    <span id="unsavedDot" class="unsaved-dot" title="Modifiche non salvate"></span>
+  </div>
+  <button class="btn btn-secondary" onclick="openFile()">📂 Apri snippets.json</button>
+  <button class="btn btn-primary"   onclick="saveFile()">💾 Salva &nbsp;<kbd style="opacity:.7;font-size:11px">⌘S</kbd></button>
+</header>
+
+<!-- ── Main ────────────────────────────────────────────────────────────── -->
+<main>
+
+  <!-- file banner -->
+  <div id="fileBanner">
+    📄 File aperto: <span id="fileName" class="fname"></span>
+  </div>
+
+  <!-- empty state -->
+  <div id="emptyState">
+    <div class="big-icon">📋</div>
+    <h2>Benvenuto in TypingDemo</h2>
+    <p>Apri il tuo <code>snippets.json</code> per gestire gli snippet,<br>oppure inizia da zero.</p>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button class="btn btn-secondary" onclick="openFile()">📂 Apri file</button>
+      <button class="btn btn-primary"   onclick="startFresh()">✨ Inizia da zero</button>
+    </div>
+  </div>
+
+  <!-- snippet section (hidden until loaded) -->
+  <div id="mainSection" style="display:none">
+    <div class="section-head">
+      <span class="section-label">Snippet</span>
+      <span id="badgeCount" class="badge">0</span>
+    </div>
+
+    <div id="snippetsList"></div>
+
+    <!-- add button -->
+    <div class="add-btn-row">
+      <button class="btn btn-secondary" onclick="showAddPanel()">＋ Nuovo snippet</button>
+    </div>
+
+    <!-- new snippet panel -->
+    <div id="addPanel">
+      <div class="add-panel-title">➕ Nuovo snippet</div>
+      <div class="form-row">
+        <div class="form-group trigger-col">
+          <label class="form-label">Trigger</label>
+          <input class="form-input mono" id="newTrigger" placeholder="/nuovo" autocomplete="off" />
+        </div>
+        <div class="form-group text-col">
+          <label class="form-label">Testo da scrivere</label>
+          <input class="form-input" id="newText" placeholder="Il testo che apparirà carattere per carattere…" autocomplete="off" />
+        </div>
+      </div>
+      <div class="form-actions" style="margin-top:14px">
+        <button class="btn btn-ghost btn-sm" onclick="hideAddPanel()">Annulla</button>
+        <button class="btn btn-primary btn-sm" onclick="addSnippet()">Aggiungi snippet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- settings (hidden until loaded) -->
+  <div id="settingsCard" style="display:none">
+    <div class="settings-title">⚙️ Impostazioni scrittura</div>
+
+    <!-- Velocità base -->
+    <div class="settings-row">
+      <div class="settings-info">
+        <strong>Velocità base</strong>
+        <small>Pausa media tra un carattere e l'altro</small>
+      </div>
+      <div>
+        <input type="range" class="speed-slider" id="speedSlider"
+               min="15" max="150" step="5" oninput="onSettingChange()">
+        <div class="slider-labels"><span>veloce</span><span>lento</span></div>
+      </div>
+      <span class="speed-value" id="speedValue">45 ms</span>
+    </div>
+
+    <!-- Variabilità -->
+    <div class="settings-row">
+      <div class="settings-info">
+        <strong>Variabilità ritmo</strong>
+        <small>Quanto oscilla la velocità tra i caratteri</small>
+      </div>
+      <div>
+        <input type="range" class="speed-slider" id="variationSlider"
+               min="0" max="100" step="5" oninput="onSettingChange()">
+        <div class="slider-labels"><span>robotico</span><span>caotico</span></div>
+      </div>
+      <span class="speed-value" id="variationValue">55%</span>
+    </div>
+
+    <!-- Pause punteggiatura -->
+    <div class="settings-row">
+      <div class="settings-info">
+        <strong>Pause dopo punteggiatura</strong>
+        <small>Pausa extra dopo . , ? ! ; :</small>
+      </div>
+      <div>
+        <input type="range" class="speed-slider" id="punctSlider"
+               min="0" max="200" step="10" oninput="onSettingChange()">
+        <div class="slider-labels"><span>nessuna</span><span>drammatica</span></div>
+      </div>
+      <span class="speed-value" id="punctValue">100%</span>
+    </div>
+
+    <!-- Micro-pause casuali -->
+    <div class="settings-row">
+      <div class="settings-info">
+        <strong>Micro-pause casuali</strong>
+        <small>Esitazioni random, come chi pensa mentre scrive</small>
+      </div>
+      <div>
+        <input type="range" class="speed-slider" id="hesitationSlider"
+               min="0" max="20" step="1" oninput="onSettingChange()">
+        <div class="slider-labels"><span>mai</span><span>spesso</span></div>
+      </div>
+      <span class="speed-value" id="hesitationValue">4%</span>
+    </div>
+
+  </div>
+
+</main>
+
+<div id="toast"></div>
+
+<!-- ── Script ───────────────────────────────────────────────────────────── -->
+<script>
+  // ─── State ────────────────────────────────────────────────────────────
+  let fileHandle  = null;
+  let config      = { typing_delay: 0.045, delete_delay: 0.02, snippets: {} };
+  let openIdx     = -1;   // which card is expanded for editing
+  let dirty       = false;
+
+  // ─── File I/O ─────────────────────────────────────────────────────────
+  async function openFile() {
+    try {
+      if ('showOpenFilePicker' in window) {
+        [fileHandle] = await window.showOpenFilePicker({
+          types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
+        });
+        const file = await fileHandle.getFile();
+        config = JSON.parse(await file.text());
+      } else {
+        // Safari/Firefox fallback
+        const input = Object.assign(document.createElement('input'),
+          { type: 'file', accept: '.json' });
+        input.onchange = async e => {
+          config = JSON.parse(await e.target.files[0].text());
+          showUI(); render(); markClean();
+        };
+        input.click();
+        return;
+      }
+      showUI(); render(); markClean();
+      document.getElementById('fileBanner').style.display = 'flex';
+      document.getElementById('fileName').textContent = fileHandle.name;
+    } catch (e) {
+      if (e.name !== 'AbortError') toast('❌ Errore nel caricamento');
+    }
+  }
+
+  async function saveFile() {
+    syncSettings();
+    const json = JSON.stringify(config, null, 2);
+    try {
+      if (fileHandle) {
+        const w = await fileHandle.createWritable();
+        await w.write(json); await w.close();
+        toast('✅ Salvato!');
+      } else {
+        const a = Object.assign(document.createElement('a'), {
+          href: URL.createObjectURL(new Blob([json], {type:'application/json'})),
+          download: 'snippets.json'
+        });
+        a.click();
+        toast('📥 File scaricato — sostituiscilo nella cartella TypingDemo');
+      }
+      markClean();
+    } catch (e) {
+      toast('❌ Errore nel salvataggio');
+    }
+  }
+
+  function startFresh() {
+    fileHandle = null;
+    config = { typing_delay: 0.045, delete_delay: 0.02, snippets: {} };
+    document.getElementById('fileBanner').style.display = 'none';
+    showUI(); render(); markDirty();
+  }
+
+  // ─── Render ───────────────────────────────────────────────────────────
+  function showUI() {
+    document.getElementById('emptyState').style.display   = 'none';
+    document.getElementById('mainSection').style.display  = 'block';
+    document.getElementById('settingsCard').style.display = 'block';
+  }
+
+  function render() {
+    // sliders
+    const ms  = Math.round((config.typing_delay  || 0.045) * 1000);
+    const var_ = Math.round((config.variation     ?? 0.55)  * 100);
+    const pct  = Math.round((config.punct_scale   ?? 1.0)   * 100);
+    const hes  = Math.round((config.hesitation_prob ?? 0.04) * 100);
+
+    document.getElementById('speedSlider').value       = ms;
+    document.getElementById('speedValue').textContent  = ms + ' ms';
+    document.getElementById('variationSlider').value      = var_;
+    document.getElementById('variationValue').textContent = var_ + '%';
+    document.getElementById('punctSlider').value       = pct;
+    document.getElementById('punctValue').textContent  = pct + '%';
+    document.getElementById('hesitationSlider').value      = hes;
+    document.getElementById('hesitationValue').textContent = hes + '%';
+
+    // snippets
+    renderList();
+  }
+
+  function renderList() {
+    const snippets = config.snippets || {};
+    const keys     = Object.keys(snippets);
+    document.getElementById('badgeCount').textContent = keys.length;
+
+    const list = document.getElementById('snippetsList');
+    list.innerHTML = '';
+
+    if (keys.length === 0) {
+      list.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text-muted);font-size:14px">
+        Nessuno snippet ancora — aggiungine uno! ⬇️</div>`;
+      return;
+    }
+
+    keys.forEach((trigger, i) => {
+      const text    = snippets[trigger];
+      const isOpen  = openIdx === i;
+      const card    = document.createElement('div');
+      card.className = 'snippet-card' + (isOpen ? ' open' : '');
+
+      card.innerHTML = `
+        <div class="card-row" onclick="toggleCard(${i})">
+          <span class="trigger-pill">${esc(trigger)}</span>
+          <span class="card-text">${esc(text)}</span>
+          <span class="card-chevron">▾</span>
+        </div>
+        ${isOpen ? editForm(i, trigger, text) : ''}
+      `;
+      list.appendChild(card);
+    });
+
+    // autofocus textarea if open
+    if (openIdx >= 0) {
+      setTimeout(() => {
+        const ta = document.getElementById('editText');
+        if (ta) { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }
+      }, 30);
+    }
+  }
+
+  function editForm(i, trigger, text) {
+    return `
+      <div class="edit-form">
+        <div class="form-row">
+          <div class="form-group trigger-col">
+            <label class="form-label">Trigger</label>
+            <input class="form-input mono" id="editTrigger" value="${esc(trigger)}" autocomplete="off"/>
+          </div>
+          <div class="form-group text-col">
+            <label class="form-label">Testo</label>
+            <textarea class="form-textarea" id="editText">${esc(text)}</textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-danger btn-sm"  onclick="deleteSnippet(${i})">🗑 Elimina</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost btn-sm"   onclick="closeCard()">Annulla</button>
+            <button class="btn btn-primary btn-sm" onclick="saveEdit(${i})">Salva modifica</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ─── Card interactions ─────────────────────────────────────────────────
+  function toggleCard(i) {
+    if (openIdx === i) { openIdx = -1; }
+    else               { openIdx = i;  }
+    renderList();
+  }
+
+  function closeCard() { openIdx = -1; renderList(); }
+
+  function saveEdit(i) {
+    const keys     = Object.keys(config.snippets);
+    const oldKey   = keys[i];
+    const newKey   = document.getElementById('editTrigger').value.trim();
+    const newText  = document.getElementById('editText').value.trim();
+
+    if (!newKey || !newText) { toast('⚠️ Trigger e testo non possono essere vuoti'); return; }
+    if (newKey !== oldKey && config.snippets[newKey]) { toast('⚠️ Questo trigger esiste già'); return; }
+
+    // Rebuild preserving order
+    const rebuilt = {};
+    keys.forEach(k => {
+      rebuilt[k === oldKey ? newKey : k] = k === oldKey ? newText : config.snippets[k];
+    });
+    config.snippets = rebuilt;
+    openIdx = -1;
+    renderList();
+    markDirty();
+    toast('✏️ Snippet aggiornato');
+  }
+
+  function deleteSnippet(i) {
+    const trigger = Object.keys(config.snippets)[i];
+    if (!confirm(`Eliminare lo snippet "${trigger}"?`)) return;
+    delete config.snippets[trigger];
+    openIdx = -1;
+    renderList();
+    markDirty();
+    toast('🗑 Snippet eliminato');
+  }
+
+  // ─── Add panel ────────────────────────────────────────────────────────
+  function showAddPanel() {
+    document.getElementById('addPanel').classList.add('visible');
+    document.getElementById('newTrigger').focus();
+  }
+
+  function hideAddPanel() {
+    document.getElementById('addPanel').classList.remove('visible');
+    document.getElementById('newTrigger').value = '';
+    document.getElementById('newText').value    = '';
+  }
+
+  function addSnippet() {
+    const trigger = document.getElementById('newTrigger').value.trim();
+    const text    = document.getElementById('newText').value.trim();
+
+    if (!trigger || !text) { toast('⚠️ Inserisci sia il trigger che il testo'); return; }
+    if (config.snippets[trigger]) { toast('⚠️ Trigger già esistente'); return; }
+
+    config.snippets[trigger] = text;
+    hideAddPanel();
+    renderList();
+    markDirty();
+    toast(`✅ Snippet "${trigger}" aggiunto`);
+  }
+
+  // ─── Settings ─────────────────────────────────────────────────────────
+  function onSettingChange() {
+    const ms  = parseInt(document.getElementById('speedSlider').value);
+    const var_ = parseInt(document.getElementById('variationSlider').value);
+    const pct  = parseInt(document.getElementById('punctSlider').value);
+    const hes  = parseInt(document.getElementById('hesitationSlider').value);
+
+    document.getElementById('speedValue').textContent      = ms   + ' ms';
+    document.getElementById('variationValue').textContent  = var_ + '%';
+    document.getElementById('punctValue').textContent      = pct  + '%';
+    document.getElementById('hesitationValue').textContent = hes  + '%';
+    markDirty();
+  }
+
+  function syncSettings() {
+    config.typing_delay     = parseInt(document.getElementById('speedSlider').value)      / 1000;
+    config.variation        = parseInt(document.getElementById('variationSlider').value)  / 100;
+    config.punct_scale      = parseInt(document.getElementById('punctSlider').value)      / 100;
+    config.hesitation_prob  = parseInt(document.getElementById('hesitationSlider').value) / 100;
+  }
+
+  // ─── Dirty state ──────────────────────────────────────────────────────
+  function markDirty() {
+    dirty = true;
+    document.getElementById('unsavedDot').classList.add('on');
+  }
+  function markClean() {
+    dirty = false;
+    document.getElementById('unsavedDot').classList.remove('on');
+  }
+
+  window.onbeforeunload = () => dirty ? '' : undefined;
+
+  // ─── Keyboard shortcuts ────────────────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); saveFile(); }
+    if (e.key === 'Escape') { closeCard(); hideAddPanel(); }
+    if (e.key === 'Enter' && e.target.id === 'newTrigger') { document.getElementById('newText').focus(); }
+    if (e.key === 'Enter' && e.target.id === 'newText')    { addSnippet(); }
+  });
+
+  // ─── Utils ────────────────────────────────────────────────────────────
+  function esc(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  let _toastTimer;
+  function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(_toastTimer);
+    _toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+  }
+</script>
+</body>
+</html>

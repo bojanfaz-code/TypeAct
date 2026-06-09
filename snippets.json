@@ -1,0 +1,15 @@
+{
+  "typing_delay": 0.045,
+  "delete_delay": 0.02,
+  "variation": 0.55,
+  "punct_scale": 1.0,
+  "hesitation_prob": 0.04,
+
+  "snippets": {
+    "/1": "Ciao! Stavo cercando informazioni sul vostro prodotto — potete aiutarmi?",
+    "/2": "Ho un cliente con esigenze specifiche di confezionamento. Quali opzioni avete disponibili?",
+    "/3": "Quali sono i tempi di consegna per un ordine personalizzato?",
+    "/4": "Avete esperienza con prodotti che richiedono certificazioni particolari?",
+    "/5": "Posso avere un preventivo per una fornitura di 10.000 unità?"
+  }
+}
