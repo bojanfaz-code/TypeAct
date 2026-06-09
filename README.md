@@ -30,9 +30,15 @@ git clone https://github.com/bojanfaz-code/TypeAct.git
 ## Quick install
 
 1. Download and unzip (link above)
-2. Double-click **`INSTALLA.command`**
-3. Follow the on-screen instructions to grant Accessibility permission
-4. Open **`GUIDE.html`** in Chrome for the full visual guide
+2. Open Terminal and run:
+```bash
+chmod +x ~/Downloads/TypeAct-main/INSTALLA.command ~/Downloads/TypeAct-main/avvia.command
+```
+3. Double-click **`INSTALLA.command`**
+4. Follow the on-screen instructions to grant Accessibility permission
+5. Open **`GUIDE.html`** in Chrome for the full visual guide
+
+> ⚠️ The `chmod` step is required after downloading from GitHub — macOS strips executable permissions from files inside ZIP archives.
 
 > ⚠️ Accessibility permission is required. Without it, the script cannot simulate keyboard input.
 
