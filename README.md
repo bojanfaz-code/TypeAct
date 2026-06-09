@@ -40,6 +40,8 @@ chmod +x ~/Downloads/TypeAct-main/INSTALLA.command ~/Downloads/TypeAct-main/avvi
 
 > ⚠️ The `chmod` step is required after downloading from GitHub — macOS strips executable permissions from files inside ZIP archives.
 
+> ⚠️ If macOS shows **"Not Opened — Apple could not verify..."**, don't click Move to Bin. Instead: **right-click the file → Open → Open**. You only need to do this once per file.
+
 > ⚠️ Accessibility permission is required. Without it, the script cannot simulate keyboard input.
 
 ---
