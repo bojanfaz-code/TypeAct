@@ -6,10 +6,10 @@
   "hesitation_prob": 0.04,
 
   "snippets": {
-    "/1": "Ciao! Stavo cercando informazioni sul vostro prodotto — potete aiutarmi?",
-    "/2": "Ho un cliente con esigenze specifiche di confezionamento. Quali opzioni avete disponibili?",
-    "/3": "Quali sono i tempi di consegna per un ordine personalizzato?",
-    "/4": "Avete esperienza con prodotti che richiedono certificazioni particolari?",
-    "/5": "Posso avere un preventivo per una fornitura di 10.000 unità?"
+    "/1": "Hi! I was looking for information about your product — can you help me?",
+    "/2": "I have a customer with specific packaging requirements. What options do you have available?",
+    "/3": "What are the lead times for a custom order?",
+    "/4": "Do you have experience with products that require special certifications?",
+    "/5": "Could I get a quote for a supply of 10,000 units?"
   }
 }

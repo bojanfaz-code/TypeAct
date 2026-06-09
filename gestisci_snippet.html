@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TypingDemo – Gestione Snippet</title>
+  <title>TypeAct – Gestione Snippet</title>
   <style>
     :root {
       color-scheme: light;
@@ -394,7 +394,7 @@
   <!-- empty state -->
   <div id="emptyState">
     <div class="big-icon">📋</div>
-    <h2>Benvenuto in TypingDemo</h2>
+    <h2>Benvenuto in TypeAct</h2>
     <p>Apri il tuo <code>snippets.json</code> per gestire gli snippet,<br>oppure inizia da zero.</p>
     <div style="display:flex;gap:10px;justify-content:center">
       <button class="btn btn-secondary" onclick="openFile()">📂 Apri file</button>
@@ -552,7 +552,7 @@
           download: 'snippets.json'
         });
         a.click();
-        toast('📥 File scaricato — sostituiscilo nella cartella TypingDemo');
+        toast('📥 File scaricato — sostituiscilo nella cartella TypeAct');
       }
       markClean();
     } catch (e) {

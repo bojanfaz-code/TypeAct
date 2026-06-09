@@ -1,64 +1,66 @@
-# TypingDemo
+# TypeAct
 
-Simula la digitazione in tempo reale durante le demo — scrivi un trigger breve e il testo appare carattere per carattere, come se lo stessi digitando tu.
+Typing effect snippet expander for macOS — simulate real-time typing during demos.
 
-Funziona in qualsiasi app: Slack, browser, Teams, PowerPoint, ecc.
+Type a short trigger (e.g. `/1`) in any app and the text appears character by character, as if you were typing it yourself.
+
+Works everywhere: Slack, browser, Teams, PowerPoint, and any other text field.
 
 ---
 
 ## ⬇️ Download
 
-**[Scarica l'ultima versione (ZIP)](https://github.com/bojanfaz-code/TypingDemo/archive/refs/heads/main.zip)**
+**[Download latest version (ZIP)](https://github.com/bojanfaz-code/TypeAct/archive/refs/heads/main.zip)**
 
-oppure clona il repository:
+or clone the repository:
 ```bash
-git clone https://github.com/bojanfaz-code/TypingDemo.git
+git clone https://github.com/bojanfaz-code/TypeAct.git
 ```
 
 ---
 
-## Requisiti
+## Requirements
 
-- macOS (10.15 Catalina o successivo)
-- Python 3 (già incluso su macOS, oppure da [python.org](https://www.python.org/downloads/))
-- Google Chrome (per l'interfaccia di gestione snippet)
-
----
-
-## Installazione rapida
-
-1. Scarica e decomprimi lo ZIP (link sopra)
-2. Doppio click su **`INSTALLA.command`**
-3. Segui le istruzioni a schermo per il permesso Accessibilità
-4. Apri **`GUIDA.html`** con Chrome per la guida completa
-
-> ⚠️ Il permesso Accessibilità è obbligatorio. Senza di esso lo script non può simulare la tastiera.
+- macOS (10.15 Catalina or later)
+- Python 3 (already included on macOS, or from [python.org](https://www.python.org/downloads/))
+- Google Chrome (for the snippet management interface)
 
 ---
 
-## Utilizzo
+## Quick install
 
-**Prima della demo:** doppio click su `avvia.command` e minimizza la finestra.
+1. Download and unzip (link above)
+2. Double-click **`INSTALLA.command`**
+3. Follow the on-screen instructions to grant Accessibility permission
+4. Open **`GUIDE.html`** in Chrome for the full visual guide
 
-**Durante la demo:** digita il trigger (es. `/1`) in qualsiasi campo testo — lo script lo sostituisce con il testo completo, carattere per carattere.
-
----
-
-## Gestione snippet
-
-Apri `gestisci_snippet.html` con Chrome per aggiungere, modificare o eliminare snippet tramite interfaccia grafica. Salva con ⌘S.
-
-Il file `snippets.json` contiene la configurazione (snippet + impostazioni velocità).
+> ⚠️ Accessibility permission is required. Without it, the script cannot simulate keyboard input.
 
 ---
 
-## Struttura file
+## Usage
 
-| File | Descrizione |
+**Before the demo:** double-click `avvia.command` and minimise the window.
+
+**During the demo:** type a trigger (e.g. `/1`) in any text field — the script replaces it with the full text, character by character.
+
+---
+
+## Managing snippets
+
+Open `gestisci_snippet.html` in Chrome to add, edit or delete snippets through a visual interface. Save with ⌘S.
+
+The `snippets.json` file holds your configuration (snippets + speed settings).
+
+---
+
+## File overview
+
+| File | Description |
 |------|-------------|
-| `INSTALLA.command` | Installer automatico — eseguire una sola volta |
-| `avvia.command` | Avvia lo script — eseguire prima di ogni demo |
-| `gestisci_snippet.html` | Interfaccia grafica per gestire gli snippet |
-| `GUIDA.html` | Guida visiva step-by-step |
-| `typing_demo.py` | Script principale (non modificare) |
-| `snippets.json` | Configurazione snippet e impostazioni |
+| `INSTALLA.command` | Automatic installer — run once |
+| `avvia.command` | Starts the script — run before each demo |
+| `gestisci_snippet.html` | Visual snippet manager |
+| `GUIDE.html` | Step-by-step visual guide |
+| `typing_demo.py` | Main script (do not edit) |
+| `snippets.json` | Snippet configuration and speed settings |
