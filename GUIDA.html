@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeAct – Installation Guide</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg:       #f5f5f7;
+      --surface:  #ffffff;
+      --border:   #e2e2e7;
+      --accent:   #007aff;
+      --accent2:  #34c759;
+      --warn:     #ff9500;
+      --danger:   #ff3b30;
+      --text:     #1c1c1e;
+      --muted:    #8e8e93;
+      --radius:   14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Hero ───────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: white;
+      padding: 60px 24px 50px;
+      text-align: center;
+    }
+    .hero-logo {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .hero-logo span { color: #64b5f6; }
+    .hero-sub {
+      font-size: 18px;
+      opacity: 0.75;
+      max-width: 520px;
+      margin: 0 auto 28px;
+      line-height: 1.5;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* ── Layout ─────────────────────────────────────────────────────── */
+    .container {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── Section header ──────────────────────────────────────────────── */
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Steps ───────────────────────────────────────────────────────── */
+    .steps { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
+
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .step.done   { border-color: #34c759; }
+    .step.warn   { border-color: var(--warn); }
+    .step.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,122,255,0.12); }
+
+    .step-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 20px 0;
+    }
+
+    .step-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-num.blue   { background: var(--accent); color: white; }
+    .step-num.green  { background: var(--accent2); color: white; }
+    .step-num.orange { background: var(--warn); color: white; }
+
+    .step-title-group { flex: 1; }
+    .step-title { font-size: 17px; font-weight: 600; }
+    .step-desc  { font-size: 14px; color: var(--muted); margin-top: 3px; }
+
+    .step-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .step-label.required { background: #fff3e0; color: #e65100; }
+    .step-label.optional { background: #e8f5e9; color: #2e7d32; }
+    .step-label.once     { background: #e3f2fd; color: #1565c0; }
+
+    .step-body { padding: 16px 20px 20px 68px; }
+
+    /* ── Instruction list ────────────────────────────────────────────── */
+    .instr { display: flex; flex-direction: column; gap: 10px; }
+
+    .instr-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .instr-n {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── Warning box ─────────────────────────────────────────────────── */
+    .warn-box {
+      background: #fff8ec;
+      border: 1px solid #ffe0a3;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+    .warn-box .icon { font-size: 18px; flex-shrink: 0; }
+
+    .info-box {
+      background: #f0f7ff;
+      border: 1px solid #c2deff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+    .info-box .icon { font-size: 18px; flex-shrink: 0; }
+
+    /* ── Code / command blocks ───────────────────────────────────────── */
+    .cmd {
+      display: inline-block;
+      background: #1c1c1e;
+      color: #64b5f6;
+      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* ── File visual ─────────────────────────────────────────────────── */
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .file-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .file-card .ficon { font-size: 22px; flex-shrink: 0; }
+    .file-card .fname { font-weight: 600; font-size: 12px; }
+    .file-card .fdesc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+    /* ── Accessibility screenshot mock ──────────────────────────────── */
+    .sys-pref-mock {
+      background: #2c2c2e;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 14px;
+      font-size: 12px;
+    }
+    .sys-pref-titlebar {
+      background: #3a3a3c;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot.r { background: #ff5f57; }
+    .dot.y { background: #ffbd2e; }
+    .dot.g { background: #28c840; }
+    .sys-pref-name { color: #ebebf5; font-size: 13px; font-weight: 500; margin-left: 8px; }
+    .sys-pref-body {
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+    }
+    .sys-pref-list {
+      background: #1c1c1e;
+      border-radius: 8px;
+      width: 200px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .sys-pref-item {
+      padding: 8px 12px;
+      color: #ebebf5;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #3a3a3c;
+    }
+    .sys-pref-item.selected { background: var(--accent); }
+    .sys-pref-right { flex: 1; }
+    .sys-pref-applist {
+      background: #1c1c1e;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .sys-pref-app {
+      padding: 8px 12px;
+      color: #ebebf5;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #3a3a3c;
+    }
+    .sys-pref-app:last-child { border-bottom: none; }
+    .toggle {
+      width: 32px; height: 18px;
+      border-radius: 9px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .toggle.on  { background: var(--accent2); }
+    .toggle.off { background: #636366; }
+    .toggle-knob {
+      width: 14px; height: 14px;
+      background: white;
+      border-radius: 50%;
+      margin: 2px;
+      margin-left: auto;
+    }
+    .toggle.on  .toggle-knob { margin-left: 16px; }
+    .toggle.off .toggle-knob { margin-left: 2px; }
+    .lock-hint {
+      color: #ebebf5;
+      font-size: 11px;
+      margin-top: 10px;
+      opacity: 0.6;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .highlight-ring {
+      outline: 2px solid var(--accent2);
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+
+    /* ── Usage demo ──────────────────────────────────────────────────── */
+    .demo-box {
+      background: #1c1c1e;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 14px;
+    }
+    .demo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #3a3a3c;
+      font-size: 13px;
+    }
+    .demo-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .demo-trigger {
+      background: #0a2540;
+      color: #64b5f6;
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .demo-arrow { color: #636366; font-size: 16px; flex-shrink: 0; }
+    .demo-text { color: #ebebf5; line-height: 1.4; }
+
+    /* ── Snippet editor preview ─────────────────────────────────────── */
+    .editor-mock {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+    .editor-titlebar {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .editor-body { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .editor-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+    }
+    .editor-pill {
+      background: #e8f2ff;
+      color: #0055cc;
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+    .editor-text { font-size: 12px; color: var(--muted); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* ── Q&A ─────────────────────────────────────────────────────────── */
+    .faq { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+    }
+    .faq-q { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+    .faq-a { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* ── Footer ──────────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-logo">Type<span>Act</span></div>
+  <div class="hero-sub">Simulate real-time typing during your demos — runs silently as a menu bar icon, no licences, no subscriptions.</div>
+  <div class="hero-badge">📋 Installation Guide &nbsp;·&nbsp; macOS</div>
+</div>
+
+<!-- ── Main ──────────────────────────────────────────────────────────────── -->
+<div class="container">
+
+  <!-- PACKAGE CONTENTS -->
+  <div class="section-title">📦 Package contents</div>
+  <div class="file-grid" style="margin-bottom:48px">
+    <div class="file-card">
+      <div class="ficon">⚙️</div>
+      <div>
+        <div class="fname">INSTALLA.command</div>
+        <div class="fdesc">Run once to install</div>
+      </div>
+    </div>
+    <div class="file-card">
+      <div class="ficon">▶️</div>
+      <div>
+        <div class="fname">avvia.command</div>
+        <div class="fdesc">Start before each demo</div>
+      </div>
+    </div>
+    <div class="file-card">
+      <div class="ficon">🌐</div>
+      <div>
+        <div class="fname">gestisci_snippet.html</div>
+        <div class="fdesc">Manage your snippets</div>
+      </div>
+    </div>
+    <div class="file-card">
+      <div class="ficon">⚙️</div>
+      <div>
+        <div class="fname">snippets.json</div>
+        <div class="fdesc">Configuration (auto)</div>
+      </div>
+    </div>
+    <div class="file-card">
+      <div class="ficon">🖥️</div>
+      <div>
+        <div class="fname">typeact_app.py</div>
+        <div class="fdesc">Menu bar app (auto)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTALLATION -->
+  <div class="section-title">🛠 Installation — one-time setup</div>
+  <div class="steps">
+
+    <!-- Step 1 -->
+    <div class="step active">
+      <div class="step-header">
+        <div class="step-num blue">1</div>
+        <div class="step-title-group">
+          <div class="step-title">Download and unzip the package</div>
+          <div class="step-desc">Anywhere on your Mac — e.g. in your Documents folder</div>
+        </div>
+        <div class="step-label once">Once</div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item">
+            <div class="instr-n">1</div>
+            <div>Click the link shared by your colleague, or go to the GitHub repository</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">2</div>
+            <div>Click <strong>Code → Download ZIP</strong></div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">3</div>
+            <div>Open the downloaded .zip — macOS will unzip it automatically</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">4</div>
+            <div>Move the <strong>TypeAct</strong> folder wherever you like (e.g. <strong>Documents</strong>)</div>
+          </div>
+        </div>
+        <div class="info-box">
+          <div class="icon">💡</div>
+          <div>Keep the folder in the same place — if you move it after installation you may need to repeat step 2.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num blue">2</div>
+        <div class="step-title-group">
+          <div class="step-title">Run INSTALLA.command</div>
+          <div class="step-desc">Installs Homebrew, Python 3 and all dependencies automatically</div>
+        </div>
+        <div class="step-label once">Once</div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item">
+            <div class="instr-n">1</div>
+            <div>Open the <strong>TypeAct</strong> folder</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">2</div>
+            <div>Double-click <strong>INSTALLA.command</strong></div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">3</div>
+            <div>If macOS shows an <em>"unidentified developer"</em> warning, go to <strong>System Settings → Privacy &amp; Security</strong> and click <strong>"Open Anyway"</strong></div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">4</div>
+            <div>Wait for the script to finish — it installs Homebrew and Python 3 if needed, which may take a few minutes the first time</div>
+          </div>
+        </div>
+        <div class="warn-box">
+          <div class="icon">⚠️</div>
+          <div><strong>The script will automatically open System Settings</strong> to the Accessibility panel when done. Continue with step 3 without closing it.</div>
+        </div>
+        <div class="info-box" style="margin-top:10px">
+          <div class="icon">💡</div>
+          <div>The installer sets up <strong>Homebrew</strong> and <strong>Python 3</strong> automatically — these are required for the menu bar icon to work on macOS. You don't need to do anything manually.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 – ACCESSIBILITY (most important) -->
+    <div class="step warn">
+      <div class="step-header">
+        <div class="step-num orange">3</div>
+        <div class="step-title-group">
+          <div class="step-title">Grant Accessibility permission to Terminal</div>
+          <div class="step-desc">Required — without this TypeAct cannot simulate keyboard input</div>
+        </div>
+        <div class="step-label required">Required</div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item">
+            <div class="instr-n">1</div>
+            <div>In System Settings, find and click <strong>Accessibility</strong> in the left panel</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">2</div>
+            <div>Click the <strong>lock 🔒</strong> at the bottom left and enter your Mac password</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">3</div>
+            <div>Click the <strong>+</strong> button to add a new app</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">4</div>
+            <div>Navigate to <strong>Applications → Utilities</strong>, select <strong>Terminal</strong> and click <strong>Open</strong></div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">5</div>
+            <div>Make sure the toggle next to <strong>Terminal</strong> is <strong>enabled (green)</strong></div>
+          </div>
+        </div>
+
+        <!-- Visual mock of the Accessibility panel -->
+        <div class="sys-pref-mock">
+          <div class="sys-pref-titlebar">
+            <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+            <div class="sys-pref-name">System Settings</div>
+          </div>
+          <div class="sys-pref-body">
+            <div class="sys-pref-list">
+              <div class="sys-pref-item">🔒 Password</div>
+              <div class="sys-pref-item">👁 Lock Screen</div>
+              <div class="sys-pref-item selected">♿ Accessibility</div>
+              <div class="sys-pref-item">📍 Location</div>
+              <div class="sys-pref-item">🎙 Microphone</div>
+            </div>
+            <div class="sys-pref-right">
+              <div class="sys-pref-applist highlight-ring">
+                <div class="sys-pref-app">
+                  <span>🖥</span> OtherApp
+                  <div class="toggle off"><div class="toggle-knob"></div></div>
+                </div>
+                <div class="sys-pref-app" style="background: rgba(52,199,89,0.12)">
+                  <span>🖥</span> <strong style="color:#64f58d">Terminal</strong>
+                  <div class="toggle on" style="margin-left:auto"><div class="toggle-knob"></div></div>
+                </div>
+              </div>
+              <div class="lock-hint">🔒 Click the lock to make changes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step done">
+      <div class="step-header">
+        <div class="step-num green">4</div>
+        <div class="step-title-group">
+          <div class="step-title">Customise your snippets</div>
+          <div class="step-desc">Set up the texts you want to appear during your demos</div>
+        </div>
+        <div class="step-label optional">Right after</div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item">
+            <div class="instr-n">1</div>
+            <div>Open <strong>gestisci_snippet.html</strong> with <strong>Chrome</strong> (right-click → Open with → Chrome)</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">2</div>
+            <div>Click <strong>"Open snippets.json"</strong> and select the file in the TypeAct folder</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">3</div>
+            <div>Add, edit or delete snippets using the visual interface</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">4</div>
+            <div>Press <strong>⌘S</strong> to save directly to the file</div>
+          </div>
+        </div>
+
+        <div class="editor-mock">
+          <div class="editor-titlebar">✏️ gestisci_snippet.html</div>
+          <div class="editor-body">
+            <div class="editor-row">
+              <div class="editor-pill">/1</div>
+              <div class="editor-text">Hi! I was looking for information about your product — can you help me?</div>
+            </div>
+            <div class="editor-row">
+              <div class="editor-pill">/2</div>
+              <div class="editor-text">What are the lead times for a custom order?</div>
+            </div>
+            <div class="editor-row" style="border: 2px dashed var(--border); background: transparent; justify-content: center; color: var(--muted); font-size: 13px;">
+              ＋ Add snippet
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DAILY USAGE -->
+  <div class="section-title">🚀 Using TypeAct during a demo</div>
+  <div class="steps" style="margin-bottom:48px">
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num blue">A</div>
+        <div class="step-title-group">
+          <div class="step-title">Before the demo: launch TypeAct</div>
+          <div class="step-desc">Double-click once — then forget about it</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="instr">
+          <div class="instr-item">
+            <div class="instr-n">1</div>
+            <div>Double-click <strong>avvia.command</strong> — a Terminal window opens briefly</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">2</div>
+            <div>The <strong>TA ●</strong> icon appears in your menu bar (top right)</div>
+          </div>
+          <div class="instr-item">
+            <div class="instr-n">3</div>
+            <div>Close the Terminal window — TypeAct keeps running in the background</div>
+          </div>
+        </div>
+        <div class="info-box">
+          <div class="icon">💡</div>
+          <div>Unlike the previous version, you <strong>can close the Terminal window</strong> — TypeAct lives in the menu bar and runs silently until you quit it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num blue">B</div>
+        <div class="step-title-group">
+          <div class="step-title">During the demo: type the trigger</div>
+          <div class="step-desc">Works in any app — Slack, browser, Teams, etc.</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="demo-box">
+          <div class="demo-row">
+            <div class="demo-trigger">/1</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">Hi! I was looking for information about your product — can you help me?</div>
+          </div>
+          <div class="demo-row">
+            <div class="demo-trigger">/2</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">What are the lead times for a custom order?</div>
+          </div>
+          <div class="demo-row">
+            <div class="demo-trigger">/3</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">Your custom snippet text here...</div>
+          </div>
+        </div>
+        <div class="info-box" style="margin-top:14px">
+          <div class="icon">⌨️</div>
+          <div>Click in the text field of any app (e.g. a Slack chat), then type the trigger. TypeAct will delete it and type the full text character by character.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step done">
+      <div class="step-header">
+        <div class="step-num green">C</div>
+        <div class="step-title-group">
+          <div class="step-title">Menu bar controls</div>
+          <div class="step-desc">Click TA ● at any time to access all controls</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="demo-box" style="padding:0; overflow:hidden; border-radius:8px;">
+          <div style="padding:10px 16px; border-bottom:1px solid #3a3a3c; font-size:12px; color:#8e8e93; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Menu bar → click TA ●</div>
+          <div class="demo-row" style="padding: 10px 16px;">
+            <div class="demo-trigger" style="background:#1a3a1a; color:#64f58d; min-width:60px">TA ●</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">TypeAct is <strong style="color:#64f58d">running</strong> — snippets are active</div>
+          </div>
+          <div class="demo-row" style="padding: 10px 16px;">
+            <div class="demo-trigger" style="min-width:60px">⏸ Pause</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">Icon becomes <strong>TA ○</strong> — triggers temporarily disabled</div>
+          </div>
+          <div class="demo-row" style="padding: 10px 16px;">
+            <div class="demo-trigger" style="min-width:60px">▶ Resume</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">Icon becomes <strong>TA ●</strong> again — triggers re-enabled</div>
+          </div>
+          <div class="demo-row" style="padding: 10px 16px;">
+            <div class="demo-trigger" style="min-width:60px">✏️ Manage</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">Opens the snippet editor in Chrome</div>
+          </div>
+          <div class="demo-row" style="padding: 10px 16px; border-bottom:none;">
+            <div class="demo-trigger" style="background:#2a0a0a; color:#ff6b6b; min-width:60px">✕ Quit</div>
+            <div class="demo-arrow">→</div>
+            <div class="demo-text">TypeAct stops completely and icon disappears</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-title">❓ Frequently asked questions</div>
+  <div class="faq" style="margin-bottom:48px">
+
+    <div class="faq-item">
+      <div class="faq-q">TypeAct doesn't respond when I type the trigger</div>
+      <div class="faq-a">Check that Terminal has the Accessibility permission enabled (Step 3). If you added it but it still doesn't work, remove it and add it again, then click <strong>TA ●  → Quit TypeAct</strong> and relaunch with avvia.command.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">macOS says "unidentified developer" when I open INSTALLA.command or avvia.command</div>
+      <div class="faq-a">Normal for unsigned .command files. Click <strong>Done</strong> on the warning, then <strong>right-click the file → Open</strong>. You only need to do this once per file.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">I don't see the TA ● icon in the menu bar</div>
+      <div class="faq-a">Your menu bar might be full. Hold <strong>Cmd</strong> and drag non-essential icons away to make space. The icon appears on the right side of the menu bar.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How do I add new snippets?</div>
+      <div class="faq-a">Click <strong>TA ● → Manage Snippets</strong>, or open gestisci_snippet.html directly in Chrome. Edit your snippets and save with ⌘S. Then quit and relaunch TypeAct to reload.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Does it work with Slack, Teams, the browser?</div>
+      <div class="faq-a">Yes — it works in any application where you can type text: Slack, Microsoft Teams, Chrome, Safari, PowerPoint, Word, and more.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Does it work on iPad or Windows?</div>
+      <div class="faq-a">No — TypeAct is macOS only. It relies on macOS Accessibility APIs that don't exist on iPadOS or Windows.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  TypeAct &nbsp;·&nbsp; For the Salesforce demo team &nbsp;·&nbsp; Built internally
+</footer>
+
+</body>
+</html>

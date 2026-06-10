@@ -2,7 +2,7 @@
 
 Typing effect snippet expander for macOS — simulate real-time typing during demos.
 
-Type a short trigger (e.g. `/1`) in any app and the text appears character by character, as if you were typing it yourself.
+Type a short trigger (e.g. `/1`) in any app and the text appears character by character, as if you were typing it yourself. TypeAct runs silently as a **menu bar icon** — no Terminal window to keep open.
 
 Works everywhere: Slack, browser, Teams, PowerPoint, and any other text field.
 
@@ -21,8 +21,8 @@ git clone https://github.com/bojanfaz-code/TypeAct.git
 
 ## Requirements
 
-- macOS (10.15 Catalina or later)
-- Python 3 (already included on macOS, or from [python.org](https://www.python.org/downloads/))
+- macOS 10.15 Catalina or later (Apple Silicon recommended)
+- Homebrew + Python 3 — **installed automatically** by `INSTALLA.command`
 - Google Chrome (for the snippet management interface)
 
 ---
@@ -34,31 +34,39 @@ git clone https://github.com/bojanfaz-code/TypeAct.git
 ```bash
 chmod +x ~/Downloads/TypeAct-main/INSTALLA.command ~/Downloads/TypeAct-main/avvia.command
 ```
-3. Double-click **`INSTALLA.command`**
+3. Double-click **`INSTALLA.command`** — installs Homebrew, Python 3 and all dependencies automatically *(takes a few minutes on first run)*
 4. Follow the on-screen instructions to grant Accessibility permission
 5. Open **`GUIDE.html`** in Chrome for the full visual guide
 
-> ⚠️ The `chmod` step is required after downloading from GitHub — macOS strips executable permissions from files inside ZIP archives.
+> ⚠️ The `chmod` step is required after downloading from GitHub — macOS strips executable permissions from ZIP archives.
 
-> ⚠️ If macOS shows **"Not Opened — Apple could not verify..."**, don't click Move to Bin. Instead: **right-click the file → Open → Open**. You only need to do this once per file.
+> ⚠️ If macOS shows **"Not Opened — Apple could not verify..."**, don't click Move to Bin. Instead: **right-click → Open**. You only need to do this once per file.
 
-> ⚠️ Accessibility permission is required. Without it, the script cannot simulate keyboard input.
+> ⚠️ Accessibility permission is required. Without it, TypeAct cannot simulate keyboard input.
 
 ---
 
 ## Usage
 
-**Before the demo:** double-click `avvia.command` and minimise the window.
+**Before the demo:** double-click `avvia.command` — the **TA ●** icon appears in your menu bar. You can close the Terminal window.
 
-**During the demo:** type a trigger (e.g. `/1`) in any text field — the script replaces it with the full text, character by character.
+**During the demo:** click in any text field and type a trigger — the text appears character by character.
+
+**Menu bar controls:**
+
+| Action | How |
+|--------|-----|
+| See loaded snippets | Click **TA ●** |
+| Pause detection | **TA ●** → Pause → icon becomes **TA ○** |
+| Resume detection | **TA ○** → Resume |
+| Edit snippets | **TA ●** → Manage Snippets |
+| Quit completely | **TA ●** → Quit TypeAct |
 
 ---
 
 ## Managing snippets
 
-Open `gestisci_snippet.html` in Chrome to add, edit or delete snippets through a visual interface. Save with ⌘S.
-
-The `snippets.json` file holds your configuration (snippets + speed settings).
+Open `gestisci_snippet.html` in Chrome, load your `snippets.json`, add or edit snippets and save with ⌘S. Restart `avvia.command` to reload.
 
 ---
 
@@ -67,8 +75,9 @@ The `snippets.json` file holds your configuration (snippets + speed settings).
 | File | Description |
 |------|-------------|
 | `INSTALLA.command` | Automatic installer — run once |
-| `avvia.command` | Starts the script — run before each demo |
+| `avvia.command` | Launches the menu bar app — run before each demo |
 | `gestisci_snippet.html` | Visual snippet manager |
 | `GUIDE.html` | Step-by-step visual guide |
-| `typing_demo.py` | Main script (do not edit) |
+| `typeact_app.py` | Menu bar app — do not edit |
+| `typing_demo.py` | Typing engine — do not edit |
 | `snippets.json` | Snippet configuration and speed settings |

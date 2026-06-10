@@ -7,52 +7,57 @@ clear
 
 echo ""
 echo "╔════════════════════════════════════════════════════╗"
-echo "║          TypeAct  –  Installer                  ║"
+echo "║          TypeAct  –  Installer                     ║"
 echo "╚════════════════════════════════════════════════════╝"
 echo ""
 echo "  Setting up TypeAct on your Mac..."
 echo ""
 
-# ── 1. Check Python 3 ─────────────────────────────────────────────────────
-echo "  [1/3]  Checking Python 3..."
-if ! command -v python3 &>/dev/null; then
-    echo ""
-    echo "  ❌  Python 3 not found on your Mac."
-    echo ""
-    echo "  Download it from: https://www.python.org/downloads/"
-    echo "  After installing, run this script again."
-    echo ""
-    echo "  Press Enter to close."
-    read; exit 1
+# ── 1. Install Homebrew + Python (required for menu bar support) ───────────
+echo "  [1/4]  Checking Homebrew + Python..."
+if [ ! -f "/opt/homebrew/bin/python3" ]; then
+    echo "       Installing Homebrew (required for menu bar support)..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo "       Installing Python via Homebrew..."
+    /opt/homebrew/bin/brew install python3
 fi
-echo "       ✓  $(python3 --version) found"
+PYTHON="/opt/homebrew/bin/python3"
+PIP="/opt/homebrew/bin/pip3"
+echo "       ✓  $($PYTHON --version) found"
 echo ""
 
 # ── 2. Install pynput ─────────────────────────────────────────────────────
-echo "  [2/3]  Installing pynput dependency..."
-if python3 -c "import pynput" 2>/dev/null; then
+echo "  [2/4]  Installing pynput..."
+if "$PYTHON" -c "import pynput" 2>/dev/null; then
     echo "       ✓  pynput already installed"
 else
-    pip3 install pynput -q 2>/dev/null \
-        || python3 -m pip install pynput -q 2>/dev/null \
-        || pip install pynput -q 2>/dev/null
-
-    if python3 -c "import pynput" 2>/dev/null; then
-        echo "       ✓  pynput installed successfully"
+    "$PIP" install pynput --break-system-packages -q 2>/dev/null
+    if "$PYTHON" -c "import pynput" 2>/dev/null; then
+        echo "       ✓  pynput installed"
     else
-        echo ""
         echo "  ❌  pynput installation failed."
-        echo "      Open Terminal and type:"
-        echo "      pip3 install pynput"
-        echo ""
-        echo "  Press Enter to close."
         read; exit 1
     fi
 fi
 echo ""
 
-# ── 3. File permissions ───────────────────────────────────────────────────
-echo "  [3/3]  Setting file permissions..."
+# ── 3. Install rumps ──────────────────────────────────────────────────────
+echo "  [3/4]  Installing rumps (menu bar support)..."
+if "$PYTHON" -c "import rumps" 2>/dev/null; then
+    echo "       ✓  rumps already installed"
+else
+    "$PIP" install rumps --break-system-packages -q 2>/dev/null
+    if "$PYTHON" -c "import rumps" 2>/dev/null; then
+        echo "       ✓  rumps installed"
+    else
+        echo "  ❌  rumps installation failed."
+        read; exit 1
+    fi
+fi
+echo ""
+
+# ── 4. File permissions ───────────────────────────────────────────────────
+echo "  [4/4]  Setting file permissions..."
 chmod +x "$DIR/INSTALLA.command"
 chmod +x "$DIR/avvia.command"
 echo "       ✓  Files ready"
@@ -70,7 +75,7 @@ echo "  │                                                 │"
 echo "  │  Opening System Settings...                     │"
 echo "  │                                                 │"
 echo "  │  You must add 'Terminal' to the Accessibility   │"
-echo "  │  list. Without this step TypeAct won't work. │"
+echo "  │  list. Without this step TypeAct won't work.    │"
 echo "  │                                                 │"
 echo "  │  HOW TO:                                        │"
 echo "  │  1. Click the lock 🔒 at the bottom left        │"
@@ -85,7 +90,7 @@ echo ""
 open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility" 2>/dev/null \
 || open "/System/Library/PreferencePanes/Security.prefPane"
 
-echo "  Once done, open GUIDE.html to learn how to use TypeAct."
+echo "  Once done, double-click avvia.command to start TypeAct."
 echo ""
 echo "  Press Enter to close this window."
 read
